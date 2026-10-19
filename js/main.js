@@ -98,6 +98,7 @@
     addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
     (function loop() { dx += (mx - dx) * .3; dy += (my - dy) * .3; c.style.transform = `translate(${dx}px, ${dy}px)`; requestAnimationFrame(loop); })();
     document.addEventListener('mouseover', e => c.classList.toggle('is-link', !!e.target.closest('a, button, input, .pin__dot')));
+    document.addEventListener('mouseover', e => { const s = e.target.closest('[data-theme]'); c.classList.toggle('on-light', !!s && s.dataset.theme === 'light'); });
   } else { const c = $('.cursor'); c && c.remove(); }
 
   /* ==========================================================
@@ -297,7 +298,7 @@
   const layoutDeck = (animate = true) => {
     cards.forEach((c, k) => {
       const pos = (k - front + cards.length) % cards.length;
-      const t = { y: pos * -16, x: pos * 18, rotate: pos * -3, scale: 1 - pos * .05, opacity: pos > 2 ? 0 : 1 - pos * .25, zIndex: 10 - pos };
+      const t = { y: pos * 14, x: 0, rotate: 0, scale: 1 - pos * .04, opacity: pos > 2 ? 0 : 1 - pos * .4, zIndex: 10 - pos };
       if (G && animate && !reduced) G.to(c, { ...t, duration: .9, ease: 'expo.out' });
       else if (G) G.set(c, t);
       else Object.assign(c.style, { zIndex: t.zIndex, transform: `translate(${t.x}px, ${t.y}px) rotate(${t.rotate}deg) scale(${t.scale})`, opacity: t.opacity });
@@ -306,7 +307,7 @@
   };
   const nextCard = () => {
     const c = cards[front];
-    if (G && !reduced) G.to(c, { x: -420, rotate: -14, opacity: 0, duration: .5, ease: 'power2.in', onComplete: () => { front = (front + 1) % cards.length; layoutDeck(); } });
+    if (G && !reduced) G.to(c, { x: -60, opacity: 0, duration: .45, ease: 'power2.in', onComplete: () => { front = (front + 1) % cards.length; layoutDeck(); } });
     else { front = (front + 1) % cards.length; layoutDeck(false); }
   };
   layoutDeck(false);
@@ -366,7 +367,6 @@
     t.from('.hero h1 .w > span', { yPercent: 115, duration: 1.1, stagger: .06, ease: 'expo.out' }, .5)
      .from('.hero__eyebrow, .hero__lead, .hero__ctas > *, .switch', { opacity: 0, y: 20, duration: 1, stagger: .08, ease: 'power3.out' }, .7)
      .from('.header > *', { opacity: 0, y: -14, duration: .9, stagger: .08, ease: 'power3.out' }, .5)
-     .from('.hot', { opacity: 0, duration: .8, stagger: .15 }, 1.6)
      .add(() => setTimeout(() => {
        $$('.hero__brand g path').forEach(p => { const L = p.getTotalLength(); G.fromTo(p, { strokeDasharray: L, strokeDashoffset: L }, { strokeDashoffset: 0, duration: 1.6, ease: 'power2.inOut' }); });
        G.from('.hero__brand .cord', { scaleY: 0, transformOrigin: '50% 0%', duration: .5, delay: 1.2 });
@@ -425,7 +425,7 @@
     baseIn(s);
     const r = { v: 0 }, rn = $('.rating__num');
     G.to(r, { v: 5, duration: 1.6, ease: 'power2.out', onUpdate: () => rn.textContent = r.v.toFixed(1) });
-    G.from('.deck', { y: 100, opacity: 0, duration: 1.2, ease: 'expo.out' });
+    G.from('.deck', { y: 60, opacity: 0, duration: 1.2, ease: 'expo.out' });
     $$('.stars i', s).forEach((st, i) => G.fromTo(st, { '--f': 0 }, { '--f': 1, duration: .45, delay: .4 + (i % 5) * .12, ease: 'power2.out' }));
     clearInterval(deckTimer); deckTimer = setInterval(nextCard, 6500);
   });

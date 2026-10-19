@@ -784,3 +784,22 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .contact .h-l b { color: var(--paper); }
 .stat p { padding-inline-end: 64px; }
 @media (max-width: 860px) { .stat__ring { display: none; } .stat p { padding-inline-end: 0; } }
+
+/* round 4 — smaller hero wordmark, no rings, elegant straight review cards */
+.hero__brand { display: flex; justify-content: flex-start; }
+.hero__brand .wordmark { width: min(620px, 46vw); }
+.hero__brand .wordmark g { stroke-width: 6; }
+@media (max-width: 860px) { .hero__brand .wordmark { width: 78vw; } }
+.stat__ring { display: none !important; }
+.stat p { padding-inline-end: 0; }
+.card { transform-origin: 50% 0; border-radius: 6px; background: var(--paper); border-top: 3px solid var(--accent-2); box-shadow: 0 24px 50px -28px rgba(0,0,0,.7); padding-top: clamp(30px, 5vh, 48px); }
+.card::before { content: "\201D"; top: 14px; inset-inline-start: auto; inset-inline-end: 28px; font-size: 72px; line-height: 1; color: rgba(200,96,46,.35); }
+.card blockquote { font-size: clamp(19px, min(1.6vw, 2.8vh), 25px); }
+
+/* cursor — a faint, diffused glow that lights what it passes */
+.cursor__dot, .cursor.is-link .cursor__dot, .cursor.is-hover .cursor__dot {
+  width: 140px; height: 140px; margin: -70px 0 0 -70px; border-radius: 50%; box-shadow: none;
+  background: radial-gradient(circle, rgba(255,226,190,.55) 0, rgba(255,190,130,.22) 12%, rgba(255,170,100,.08) 34%, transparent 66%);
+  mix-blend-mode: screen; filter: blur(2px); transition: width .5s var(--ease), height .5s var(--ease), margin .5s var(--ease), opacity .4s; }
+.cursor.is-link .cursor__dot { width: 190px; height: 190px; margin: -95px 0 0 -95px; }
+.cursor.on-light .cursor__dot { mix-blend-mode: multiply; background: radial-gradient(circle, rgba(232,140,70,.28) 0, rgba(232,140,70,.12) 14%, rgba(232,140,70,.04) 36%, transparent 66%); }
