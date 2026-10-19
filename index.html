@@ -19,14 +19,14 @@
 
 <div class="grain" aria-hidden="true"></div>
 
-<!-- ============ PRELOADER — the dot lights up ============ -->
+<!-- ============ PRELOADER — the lamp drops and lights up ============ -->
 <div class="loader" aria-hidden="true">
   <div class="loader__glow"></div>
   <div class="loader__inner"><svg class="wordmark" data-wordmark></svg></div>
   <div class="loader__meta"><span class="lbl">Interior · Planning · Management</span><span class="loader__count">000</span></div>
 </div>
 
-<div class="cursor" aria-hidden="true"><div class="cursor__dot"><span>VIEW</span></div></div>
+<div class="cursor" aria-hidden="true"><div class="cursor__dot"></div></div>
 
 <!-- ============ HEADER ============ -->
 <header class="header">
@@ -41,11 +41,8 @@
     <a href="#contact">צור קשר</a>
   </nav>
   <div class="header__cta">
-    <a class="header__phone" href="tel:+972542059860" aria-label="התקשרו 054-2059860">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>
-      <span>054-2059860</span>
-    </a>
-    <a class="wa-round" href="#" data-wa aria-label="וואטסאפ 054-2059860"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#i-wa"/></svg></a>
+    <a class="header__phone" href="tel:+972542059860"><span>054-2059860</span></a>
+    <a class="cta cta--line" href="#" data-wa><i class="cta__dot"></i>דברו איתי</a>
     <button class="burger" aria-label="פתיחת תפריט" aria-expanded="false"><span></span></button>
   </div>
 </header>
@@ -59,8 +56,8 @@
   <a class="menu__link" href="#clients">לקוחות <span class="disp">Clients</span></a>
   <a class="menu__link" href="#contact">צור קשר <span class="disp">Contact</span></a>
   <div class="menu__cta">
-    <a class="btn btn--wa btn--lg" href="#" data-wa><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg>דברו איתי בוואטסאפ</a>
-    <a class="btn btn--line btn--lg" href="tel:+972542059860">התקשרו אליי ☎ 054-2059860</a>
+    <a class="cta cta--light cta--lg" href="#" data-wa><i class="cta__dot"></i>דברו איתי</a>
+    <a class="cta cta--ghost cta--lg" href="tel:+972542059860">054-2059860</a>
   </div>
 </nav>
 
@@ -68,117 +65,131 @@
 
 <main>
 
-<!-- ============ 01 HERO — turn the lights on ============ -->
+<!-- ============ 01 HERO — the lights come on ============ -->
 <section class="screen hero" id="home" data-title="ראשי" data-theme="dark">
   <div class="scene" aria-hidden="true">
     <img class="scene__img scene__dark" src="assets/img/p/1000500028.webp" alt="">
-    <img class="scene__img scene__sketch" src="assets/img/p/1000500028.webp" alt="">
     <img class="scene__img scene__lit" src="assets/img/p/1000500028.webp" alt="">
     <div class="scene__flare"></div>
-    <button class="hot" style="left:48%;top:25%" data-light="48,25" data-cursor="ON" tabindex="-1">ON</button>
-    <button class="hot" style="left:31.5%;top:52%" data-light="31.5,52" data-cursor="ON" tabindex="-1">ON</button>
+    <button class="hot" style="left:48%;top:25%" data-light="48,25" tabindex="-1"><span>OFF</span></button>
+    <button class="hot" style="left:31.5%;top:52%" data-light="31.5,52" tabindex="-1"><span>OFF</span></button>
   </div>
   <div class="hero__shade"></div>
-  <div class="hero__hint"><span class="disp">Turn the lights on</span></div>
 
   <div class="hero__content">
-    <div>
+    <div class="hero__text">
       <div class="hero__eyebrow"><span class="lbl">Rozenbaum · Interior Design</span></div>
       <h1 class="split">תכנון <b>מדויק.</b><br>עיצוב עם <b>משמעות.</b></h1>
       <p class="hero__lead">חללים שנוצרים מתוך הקשבה, חשיבה תכנונית מעמיקה וירידה לפרטים — מהרעיון הראשון ועד לתוצאה.</p>
       <div class="hero__ctas">
-        <a class="btn btn--wa btn--lg" href="#" data-wa><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg>שליחת הודעה בוואטסאפ <span class="num">054-2059860</span></a>
-        <a class="btn btn--line btn--lg" href="#projects">לצפייה בפרויקטים ←</a>
+        <a class="cta cta--light cta--lg" href="#" data-wa><i class="cta__dot"></i>דברו איתי</a>
+        <a class="cta cta--ghost cta--lg" href="#projects">לצפייה בפרויקטים <span class="cta__arrow">←</span></a>
       </div>
     </div>
-    <button class="switch" aria-pressed="false" aria-label="הדלקת האור">
-      <span class="lbl switch__lbl">Lights off</span>
+    <button class="switch" aria-pressed="false" aria-label="הדלקה וכיבוי של האור">
       <span class="switch__track"><span class="switch__knob"></span></span>
+      <span class="lbl switch__lbl">Lights off</span>
     </button>
+  </div>
+  <div class="hero__brand"><svg class="wordmark" data-wordmark></svg></div>
+</section>
+
+<!-- ============ 02 FILM ============ -->
+<section class="screen dark film" id="film" data-title="אווירה" data-theme="dark">
+  <div class="film__frame"><video src="assets/video/dining.mp4" muted loop playsinline preload="metadata"></video></div>
+  <div class="film__words" aria-hidden="true"><span>Space</span><span>Light</span><span>Flow</span></div>
+  <div class="film__caption">
+    <p>חלל שעובד נכון, <b>מרגיש נכון</b><br>ונראה בדיוק כפי שהוא צריך.</p>
+    <a class="cta cta--light" href="#projects">לפרויקטים <span class="cta__arrow">←</span></a>
   </div>
 </section>
 
-<!-- ============ 02 PROJECTS ============ -->
+<!-- ============ 03 PROJECTS ============ -->
 <section class="screen dark works" id="projects" data-title="פרויקטים" data-theme="dark">
   <div class="screen__head">
     <div>
-      <div class="eyebrow"><b class="lbl">02</b><span class="lbl">Selected Works</span></div>
+      <div class="eyebrow"><b class="lbl">03</b><span class="lbl">Selected Works</span></div>
       <h2 class="h-l split">פרויקטים <b>נבחרים</b></h2>
     </div>
-    <p>מבחר עבודות בתכנון ועיצוב חללים ציבוריים, קהילתיים, מקצועיים ופרטיים.</p>
+    <p>מבחר עבודות בתכנון ועיצוב חללים ציבוריים, קהילתיים, מקצועיים ופרטיים. לחצו על נקודת אור כדי לראות את הפריט.</p>
   </div>
   <div class="works__grid">
     <div class="works__text">
       <div class="works__info" aria-live="polite">
-        <span class="disp" data-p="type"></span>
+        <span class="works__kind" data-p="type"></span>
         <h3 data-p="name"></h3>
         <p data-p="desc"></p>
         <dl><dt>היקף</dt><dd data-p="scope"></dd><dt>הדמיות</dt><dd data-p="count"></dd></dl>
       </div>
-      <div>
-        <div class="works__ctrl">
-          <button class="works__next" aria-label="הפרויקט הבא"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 6l-6 6 6 6"/></svg></button>
-          <button class="works__prev" aria-label="הפרויקט הקודם"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 6l6 6-6 6"/></svg></button>
-          <span class="works__count"><b>01</b> / 05</span>
-        </div>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
-          <button class="btn btn--line works__open" style="color:var(--paper)">לגלריית הפרויקט ↗</button>
-          <a class="btn btn--wa" href="#" data-wa="שלום אוריאל, ראיתי את הפרויקטים באתר ואשמח לשמוע על פרויקט דומה"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg>רוצים פרויקט כזה?</a>
-        </div>
+      <div class="works__actions">
+        <button class="cta cta--light works__open">לגלריית הפרויקט <span class="cta__arrow">↗</span></button>
+        <a class="cta cta--ghost" href="#" data-wa="שלום אוריאל, ראיתי את הפרויקטים באתר ואשמח לשמוע על פרויקט דומה">רוצים פרויקט כזה? <span class="cta__arrow">←</span></a>
       </div>
     </div>
-    <div style="display:grid;grid-template-rows:1fr auto;gap:12px;min-height:0">
-      <div class="stage" data-cursor="GALLERY"></div>
-      <div class="thumbs"></div>
+    <div class="works__visual">
+      <div class="stage"></div>
+      <div class="pnav">
+        <button class="pnav__arrow works__prev" aria-label="הפרויקט הקודם"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 6l6 6-6 6"/></svg></button>
+        <div class="pnav__tabs"></div>
+        <button class="pnav__arrow works__next" aria-label="הפרויקט הבא"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 6l-6 6 6 6"/></svg></button>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ============ 03 ABOUT + ACHIEVEMENTS ============ -->
+<!-- ============ 04 ABOUT + NUMBERS ============ -->
 <section class="screen about" id="about" data-title="אודות" data-theme="light">
+  <svg class="about__plan" viewBox="0 0 800 520" aria-hidden="true">
+    <rect x="20" y="20" width="760" height="480"/><line x1="300" y1="20" x2="300" y2="300"/><line x1="300" y1="360" x2="300" y2="500"/>
+    <line x1="300" y1="260" x2="780" y2="260"/><line x1="560" y1="260" x2="560" y2="500"/><line x1="20" y1="300" x2="200" y2="300"/>
+    <path class="acc" d="M300 300 A60 60 0 0 1 360 360"/><path class="acc" d="M560 330 A50 50 0 0 0 610 280"/>
+    <rect x="360" y="60" width="160" height="90"/><rect x="620" y="320" width="120" height="140"/><circle class="acc" cx="160" cy="160" r="60"/>
+  </svg>
   <div class="about__grid">
     <div class="about__text">
-      <div class="eyebrow"><b class="lbl">03</b><span class="lbl">About the Studio</span></div>
+      <div class="eyebrow"><b class="lbl">04</b><span class="lbl">About the Studio</span></div>
       <h2 class="h-l split">עיצוב שמתחיל <b>בחשיבה נכונה.</b></h2>
       <p>סטודיו רוזנבאום, בהובלת אוריאל רוזנבאום, מתמחה בתכנון ועיצוב פנים ובשירותי פיקוח וניהול פרויקטים. הגישה שלנו משלבת בין הבנת צורכי הלקוח, פתרונות תכנוניים מעשיים ושפה אסתטית מוקפדת.</p>
       <p>כל פרויקט הוא הזדמנות ליצור מקום שעובד נכון, מרגיש נכון ונראה בדיוק כפי שהוא צריך.</p>
-      <svg class="wordmark about__sign" data-wordmark></svg>
       <div class="about__ctas">
-        <a class="btn btn--wa" href="#" data-wa><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg>דברו איתי בוואטסאפ</a>
-        <a class="btn btn--line" href="tel:+972542059860">התקשרו אליי ☎</a>
+        <a class="cta cta--solid" href="#" data-wa><i class="cta__dot"></i>דברו איתי</a>
+        <a class="cta cta--line" href="tel:+972542059860">054-2059860</a>
       </div>
     </div>
     <div class="stats">
       <div class="stat">
-        <div class="stat__num" data-count="5">0</div>
-        <p>פרויקטים נבחרים בתיק העבודות — ציבור, קהילה, עבודה ומגורים</p>
+        <div class="stat__num"><span class="odo" data-count="5">0</span></div>
+        <p>פרויקטים נבחרים בתיק — ציבור, קהילה, עבודה ומגורים</p>
+        <svg class="stat__ring" viewBox="0 0 100 100"><circle cx="50" cy="50" r="44"/></svg>
       </div>
       <div class="stat stat--video">
-        <video src="assets/video/window.mp4" muted loop playsinline autoplay preload="metadata"></video>
+        <video src="assets/video/window.mp4" muted loop playsinline preload="metadata"></video>
         <p class="lbl">Light · Proportion · Detail</p>
       </div>
       <div class="stat stat--accent">
         <span class="demo">נתון לדוגמה</span>
-        <div class="stat__num"><span data-count="10">0</span><sup>+</sup></div>
+        <div class="stat__num"><span class="odo" data-count="10">0</span><sup>+</sup></div>
         <p>שנות ניסיון בתכנון ועיצוב פנים</p>
+        <svg class="stat__ring" viewBox="0 0 100 100"><circle cx="50" cy="50" r="44"/></svg>
       </div>
       <div class="stat">
         <span class="demo">נתון לדוגמה</span>
-        <div class="stat__num"><span data-count="12000">0</span><sup>m²</sup></div>
+        <div class="stat__num"><span class="odo" data-count="12000">0</span><sup>m²</sup></div>
         <p>שטח שתוכנן ועוצב</p>
+        <svg class="stat__ring" viewBox="0 0 100 100"><circle cx="50" cy="50" r="44"/></svg>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ 04 SERVICES ============ -->
+<!-- ============ 05 SERVICES ============ -->
 <section class="screen services" id="services" data-title="שירותים" data-theme="light">
   <div class="screen__head">
     <div>
-      <div class="eyebrow"><b class="lbl">04</b><span class="lbl">What we do</span></div>
+      <div class="eyebrow"><b class="lbl">05</b><span class="lbl">What we do</span></div>
       <h2 class="h-l split">מהתכנון <b>ועד לפרט האחרון</b></h2>
     </div>
-    <p>שלושה תחומים, שפה אחת — תכנון, עיצוב וליווי שמחזיקים את כוונת התכנון עד שהחלל מוכן.</p>
+    <a class="cta cta--solid cta--lg" href="#" data-wa="שלום אוריאל, אשמח לתאם שיחת ייעוץ"><i class="cta__dot"></i>לתיאום שיחת ייעוץ</a>
   </div>
   <div class="svc-grid">
     <article class="svc">
@@ -188,7 +199,7 @@
       <span class="disp">Planning</span>
       <h3>תכנון חללים</h3>
       <p>אפיון צרכים, חלוקה פונקציונלית, העמדת חלל ופתרונות תכנוניים המותאמים לאנשים ולשימוש היומיומי.</p>
-      <a class="svc__more" href="#" data-wa="שלום אוריאל, אשמח לפרטים על תכנון חללים"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg>לפרטים בוואטסאפ ←</a>
+      <a class="more" href="#" data-wa="שלום אוריאל, אשמח לפרטים על תכנון חללים">לבירור נוסף <span class="cta__arrow">←</span></a>
     </article>
     <article class="svc">
       <div class="svc__top"><span class="svc__num">02</span>
@@ -197,7 +208,7 @@
       <span class="disp">Interior Design</span>
       <h3>עיצוב פנים</h3>
       <p>יצירת שפה עיצובית שלמה — חומרים, צבעים, תאורה, נגרות ופרטים שמייצרים חלל הרמוני ומדויק.</p>
-      <a class="svc__more" href="#" data-wa="שלום אוריאל, אשמח לפרטים על עיצוב פנים"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg>לפרטים בוואטסאפ ←</a>
+      <a class="more" href="#" data-wa="שלום אוריאל, אשמח לפרטים על עיצוב פנים">לבירור נוסף <span class="cta__arrow">←</span></a>
     </article>
     <article class="svc">
       <div class="svc__top"><span class="svc__num">03</span>
@@ -206,16 +217,16 @@
       <span class="disp">Management</span>
       <h3>פיקוח וניהול פרויקטים</h3>
       <p>ליווי תהליכי ביצוע, תיאום ובקרה בהתאם להיקף השירות שנקבע לכל פרויקט, לשמירה על כוונת התכנון.</p>
-      <a class="svc__more" href="#" data-wa="שלום אוריאל, אשמח לפרטים על פיקוח וניהול פרויקט"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg>לפרטים בוואטסאפ ←</a>
+      <a class="more" href="#" data-wa="שלום אוריאל, אשמח לפרטים על פיקוח וניהול פרויקט">לבירור נוסף <span class="cta__arrow">←</span></a>
     </article>
   </div>
 </section>
 
-<!-- ============ 05 SKETCH → REALITY ============ -->
+<!-- ============ 06 SKETCH → REALITY ============ -->
 <section class="screen compare-wrap" id="sketch" data-title="מסקיצה למציאות" data-theme="light">
   <div class="screen__head">
     <div>
-      <div class="eyebrow"><b class="lbl">05</b><span class="lbl">From line to living</span></div>
+      <div class="eyebrow"><b class="lbl">06</b><span class="lbl">From line to living</span></div>
       <h2 class="h-l split">מהקו הראשון <b>לחלל עצמו.</b></h2>
     </div>
     <div class="build">
@@ -228,17 +239,16 @@
       </div>
     </div>
   </div>
-  <div class="compare" data-cursor="DRAG" data-step="3" style="--pos:50%">
-    <div class="compare__layer compare__real"><img src="assets/img/p/1000796844.webp" alt="דירת יוקרה — הדמיה" loading="lazy"></div><div class="compare__glow"></div><div class="pins compare__pins"></div>
+  <div class="compare" data-step="3" style="--pos:50%">
+    <div class="compare__layer compare__real"><img src="assets/img/p/1000796844.webp" alt="דירת יוקרה — הדמיה" loading="lazy"></div>
+    <div class="compare__glow"></div>
+    <div class="pins compare__pins"></div>
     <div class="compare__layer compare__sketch"><img src="assets/img/p/1000796844.webp" alt="" loading="lazy">
       <svg class="compare__overlay" viewBox="0 0 1536 826" preserveAspectRatio="none" aria-hidden="true">
-        <line x1="605" y1="150" x2="605" y2="600"/><line x1="1105" y1="150" x2="1105" y2="600"/>
-        <line x1="605" y1="120" x2="1105" y2="120"/><line x1="605" y1="110" x2="605" y2="130"/><line x1="1105" y1="110" x2="1105" y2="130"/>
-        <text x="790" y="104">W 4.20</text>
-        <rect x="0" y="520" width="505" height="180"/><text x="20" y="506">SOFA 2.80</text>
-        <path d="M1070 690 Q1290 470 1510 690"/><text x="1190" y="744">LOUNGE</text>
-        <line x1="40" y1="790" x2="1500" y2="790"/><text x="40" y="778">FFL 0.00</text>
-        <circle cx="910" cy="470" r="70"/>
+        <line x1="605" y1="120" x2="1105" y2="120"/><line x1="605" y1="108" x2="605" y2="132"/><line x1="1105" y1="108" x2="1105" y2="132"/>
+        <text x="800" y="102">4.20 M</text>
+        <line x1="40" y1="790" x2="1500" y2="790"/><line x1="40" y1="778" x2="40" y2="802"/><line x1="1500" y1="778" x2="1500" y2="802"/>
+        <text x="700" y="774">8.60 M</text>
       </svg>
     </div>
     <div class="compare__handle"><div class="compare__knob"><svg viewBox="0 0 34 14" fill="none" stroke="currentColor"><path d="M6 1 1 7l5 6M28 1l5 6-5 6M1 7h32"/></svg></div></div>
@@ -248,61 +258,76 @@
   </div>
 </section>
 
-<!-- ============ 06 REVIEWS ============ -->
+<!-- ============ 07 REVIEWS ============ -->
 <section class="screen dark reviews" id="reviews" data-title="המלצות" data-theme="dark">
-  <div class="screen__head">
-    <div>
-      <div class="eyebrow"><b class="lbl">06</b><span class="lbl">Kind words</span></div>
-      <h2 class="h-l split">מה אומרים <b>הלקוחות</b></h2>
-    </div>
-    <p>חוויית העבודה חשובה לנו בדיוק כמו התוצאה.</p>
-  </div>
   <div class="reviews__grid">
-    <article class="review">
-      <div style="display:flex;justify-content:space-between;align-items:center"><span class="review__q">"</span><span class="demo">המלצה לדוגמה</span></div>
-      <blockquote>אוריאל הקשיב לכל פרט, הציע פתרונות שלא חשבנו עליהם וליווה אותנו עד המסירה. התוצאה מדויקת בדיוק כמו בהדמיות.</blockquote>
-      <footer><span class="review__avatar">א</span><div><b>[שם הלקוח]</b><span>דירת מגורים · תכנון ועיצוב</span></div></footer>
-    </article>
-    <article class="review">
-      <div style="display:flex;justify-content:space-between;align-items:center"><span class="review__q">"</span><span class="demo">המלצה לדוגמה</span></div>
-      <blockquote>תכנון חכם של חלל קהילתי מורכב — כל אזור עובד, הכול מרגיש מזמין, והפיקוח בשטח שמר על כוונת התכנון עד הסוף.</blockquote>
-      <footer><span class="review__avatar">ב</span><div><b>[שם הלקוח]</b><span>מרכז קהילתי · תכנון ופיקוח</span></div></footer>
-    </article>
-    <article class="review">
-      <div style="display:flex;justify-content:space-between;align-items:center"><span class="review__q">"</span><span class="demo">המלצה לדוגמה</span></div>
-      <blockquote>מקצועיות, סבלנות וטעם מעולה. קיבלנו סביבת עבודה פונקציונלית ויפה, בזמן ובתיאום מלא עם כל הגורמים.</blockquote>
-      <footer><span class="review__avatar">ג</span><div><b>[שם הלקוח]</b><span>סביבת עבודה · עיצוב פנים</span></div></footer>
-    </article>
-  </div>
-  <div class="reviews__foot">
-    <p>רוצים להיות הפרויקט הבא שאנחנו מספרים עליו?</p>
-    <a class="btn btn--wa btn--lg" href="#" data-wa><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg>דברו איתי בוואטסאפ <span class="num">054-2059860</span></a>
+    <div class="rating">
+      <div class="eyebrow"><b class="lbl">07</b><span class="lbl">Kind words</span></div>
+      <h2 class="h-l split">מה אומרים <b>הלקוחות</b></h2>
+      <div class="rating__score">
+        <span class="rating__num">5.0</span>
+        <div>
+          <div class="stars stars--big" role="img" aria-label="5 מתוך 5"><i></i><i></i><i></i><i></i><i></i></div>
+          <span class="rating__txt">דירוג לקוחות ממוצע <span class="demo">לדוגמה</span></span>
+        </div>
+      </div>
+      <a class="cta cta--light cta--lg" href="#" data-wa><i class="cta__dot"></i>רוצים להיות הבאים? דברו איתי</a>
+    </div>
+    <div class="deck" aria-roledescription="carousel">
+      <article class="card">
+        <div class="card__top"><div class="stars" role="img" aria-label="5 מתוך 5"><i></i><i></i><i></i><i></i><i></i></div><span class="demo">המלצה לדוגמה</span></div>
+        <blockquote>אוריאל הקשיב לכל פרט, הציע פתרונות שלא חשבנו עליהם וליווה אותנו עד המסירה. התוצאה מדויקת בדיוק כמו בהדמיות.</blockquote>
+        <footer><span class="card__avatar">א</span><div><b>[שם הלקוח]</b><span>דירת מגורים · תכנון ועיצוב</span></div></footer>
+      </article>
+      <article class="card">
+        <div class="card__top"><div class="stars" role="img" aria-label="5 מתוך 5"><i></i><i></i><i></i><i></i><i></i></div><span class="demo">המלצה לדוגמה</span></div>
+        <blockquote>תכנון חכם של חלל קהילתי מורכב — כל אזור עובד, הכול מרגיש מזמין, והפיקוח בשטח שמר על כוונת התכנון עד הסוף.</blockquote>
+        <footer><span class="card__avatar">ב</span><div><b>[שם הלקוח]</b><span>מרכז קהילתי · תכנון ופיקוח</span></div></footer>
+      </article>
+      <article class="card">
+        <div class="card__top"><div class="stars" role="img" aria-label="5 מתוך 5"><i></i><i></i><i></i><i></i><i></i></div><span class="demo">המלצה לדוגמה</span></div>
+        <blockquote>מקצועיות, סבלנות וטעם מעולה. קיבלנו סביבת עבודה פונקציונלית ויפה, בזמן ובתיאום מלא עם כל הגורמים.</blockquote>
+        <footer><span class="card__avatar">ג</span><div><b>[שם הלקוח]</b><span>סביבת עבודה · עיצוב פנים</span></div></footer>
+      </article>
+      <div class="deck__nav"><button class="deck__btn" aria-label="ההמלצה הבאה">←</button><span class="deck__dots"></span></div>
+    </div>
   </div>
 </section>
 
-<!-- ============ 07 CLIENTS ============ -->
+<!-- ============ 08 CLIENTS ============ -->
 <section class="screen clients" id="clients" data-title="לקוחות" data-theme="light">
-  <div class="screen__head">
+  <div class="screen__head screen__head--center">
     <div>
-      <div class="eyebrow"><b class="lbl">07</b><span class="lbl">Clients &amp; Institutions</span></div>
+      <div class="eyebrow eyebrow--center"><b class="lbl">08</b><span class="lbl">Clients &amp; Institutions</span></div>
       <h2 class="h-l split">מוסדות ולקוחות <b>שעובדים איתנו</b></h2>
     </div>
-    <p>מוסדות קהילה, ארגונים, עסקים ומשפחות — כל לקוח מקבל תכנון שנבנה סביבו.</p>
   </div>
-  <div class="bands" aria-label="מוסדות ולקוחות">
-    <div class="band band--a"><div class="band__track" data-dir="1"><div class="client"><div class="client__in"><span class="client__mark">01</span><b>נשי חב״ד צפת</b><span class="client__sub">מרכז מלכתא</span></div></div><div class="client"><div class="client__in"><span class="client__mark">02</span><b>בית חב״ד נאות פרס</b><span class="client__sub">חיפה</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">03</span><b>[שם המוסד]</b><span class="client__sub">מועדונית נוער</span><span class="demo">חסר שם</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">04</span><b>[שם החברה]</b><span class="client__sub">מעבדת אלקטרוניקה</span><span class="demo">חסר שם</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">05</span><b>[לוגו לקוח]</b><span class="client__sub">מוסד חינוך</span><span class="demo">לדוגמה</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">06</span><b>[לוגו לקוח]</b><span class="client__sub">רשות / עירייה</span><span class="demo">לדוגמה</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">07</span><b>[לוגו לקוח]</b><span class="client__sub">משרדים</span><span class="demo">לדוגמה</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">08</span><b>[לוגו לקוח]</b><span class="client__sub">יזמות ומגורים</span><span class="demo">לדוגמה</span></div></div><div class="client"><div class="client__in"><span class="client__mark">01</span><b>נשי חב״ד צפת</b><span class="client__sub">מרכז מלכתא</span></div></div><div class="client"><div class="client__in"><span class="client__mark">02</span><b>בית חב״ד נאות פרס</b><span class="client__sub">חיפה</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">03</span><b>[שם המוסד]</b><span class="client__sub">מועדונית נוער</span><span class="demo">חסר שם</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">04</span><b>[שם החברה]</b><span class="client__sub">מעבדת אלקטרוניקה</span><span class="demo">חסר שם</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">05</span><b>[לוגו לקוח]</b><span class="client__sub">מוסד חינוך</span><span class="demo">לדוגמה</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">06</span><b>[לוגו לקוח]</b><span class="client__sub">רשות / עירייה</span><span class="demo">לדוגמה</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">07</span><b>[לוגו לקוח]</b><span class="client__sub">משרדים</span><span class="demo">לדוגמה</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">08</span><b>[לוגו לקוח]</b><span class="client__sub">יזמות ומגורים</span><span class="demo">לדוגמה</span></div></div></div></div>
-    <div class="band band--b"><div class="band__track" data-dir="-1"><div class="client client--ph"><div class="client__in"><span class="client__mark">05</span><b>[לוגו לקוח]</b><span class="client__sub">מוסד חינוך</span><span class="demo">לדוגמה</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">06</span><b>[לוגו לקוח]</b><span class="client__sub">רשות / עירייה</span><span class="demo">לדוגמה</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">07</span><b>[לוגו לקוח]</b><span class="client__sub">משרדים</span><span class="demo">לדוגמה</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">08</span><b>[לוגו לקוח]</b><span class="client__sub">יזמות ומגורים</span><span class="demo">לדוגמה</span></div></div><div class="client"><div class="client__in"><span class="client__mark">01</span><b>נשי חב״ד צפת</b><span class="client__sub">מרכז מלכתא</span></div></div><div class="client"><div class="client__in"><span class="client__mark">02</span><b>בית חב״ד נאות פרס</b><span class="client__sub">חיפה</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">03</span><b>[שם המוסד]</b><span class="client__sub">מועדונית נוער</span><span class="demo">חסר שם</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">04</span><b>[שם החברה]</b><span class="client__sub">מעבדת אלקטרוניקה</span><span class="demo">חסר שם</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">05</span><b>[לוגו לקוח]</b><span class="client__sub">מוסד חינוך</span><span class="demo">לדוגמה</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">06</span><b>[לוגו לקוח]</b><span class="client__sub">רשות / עירייה</span><span class="demo">לדוגמה</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">07</span><b>[לוגו לקוח]</b><span class="client__sub">משרדים</span><span class="demo">לדוגמה</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">08</span><b>[לוגו לקוח]</b><span class="client__sub">יזמות ומגורים</span><span class="demo">לדוגמה</span></div></div><div class="client"><div class="client__in"><span class="client__mark">01</span><b>נשי חב״ד צפת</b><span class="client__sub">מרכז מלכתא</span></div></div><div class="client"><div class="client__in"><span class="client__mark">02</span><b>בית חב״ד נאות פרס</b><span class="client__sub">חיפה</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">03</span><b>[שם המוסד]</b><span class="client__sub">מועדונית נוער</span><span class="demo">חסר שם</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">04</span><b>[שם החברה]</b><span class="client__sub">מעבדת אלקטרוניקה</span><span class="demo">חסר שם</span></div></div></div></div>
+  <div class="names">
+    <div class="names__row"><div class="names__track" data-dir="1">
+      <span class="name"><b>נשי חב״ד צפת</b><small class="lbl">Malkhata Center</small></span><i></i>
+      <span class="name"><b>בית חב״ד נאות פרס</b><small class="lbl">Haifa</small></span><i></i>
+      <span class="name"><b>מועדונית נוער</b><small class="lbl">Youth Club</small></span><i></i>
+      <span class="name"><b>מעבדת אלקטרוניקה</b><small class="lbl">Tech Lab</small></span><i></i>
+      <span class="name"><b>דירת יוקרה</b><small class="lbl">Private Residence</small></span><i></i>
+    </div></div>
+    <div class="names__row names__row--b"><div class="names__track" data-dir="-1">
+      <span class="name"><b>מרכזים קהילתיים</b><small class="lbl">Community</small></span><i></i>
+      <span class="name"><b>מוסדות חינוך ונוער</b><small class="lbl">Education</small></span><i></i>
+      <span class="name"><b>סביבות עבודה</b><small class="lbl">Workspaces</small></span><i></i>
+      <span class="name"><b>מגורים פרטיים</b><small class="lbl">Residential</small></span><i></i>
+      <span class="name"><b>אולמות ואירוח</b><small class="lbl">Hospitality</small></span><i></i>
+    </div></div>
   </div>
   <div class="clients__foot">
-    <p>מנהלים מוסד, ארגון או עסק ומתכננים שיפוץ או חלל חדש? נשמח לתאם שיחת היכרות.</p>
-    <a class="btn btn--wa" href="#" data-wa="שלום אוריאל, אני מנהל/ת מוסד ואשמח לתאם שיחת היכרות"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg>לתיאום שיחה בוואטסאפ</a>
+    <p>מנהלים מוסד, ארגון או עסק ומתכננים חלל חדש? נשמח לתאם שיחת היכרות.</p>
+    <a class="cta cta--solid" href="#" data-wa="שלום אוריאל, אני מנהל/ת מוסד ואשמח לתאם שיחת היכרות"><i class="cta__dot"></i>לתיאום שיחת היכרות</a>
   </div>
 </section>
 
-<!-- ============ 08 PROCESS ============ -->
+<!-- ============ 09 PROCESS ============ -->
 <section class="screen dark process" id="process" data-title="תהליך" data-theme="dark">
   <div class="process__bg"><video src="assets/video/house.mp4" muted loop playsinline preload="none"></video></div>
-  <div class="eyebrow"><b class="lbl">08</b><span class="lbl">Process</span></div>
+  <div class="eyebrow"><b class="lbl">09</b><span class="lbl">Process</span></div>
   <h2 class="h-l split">מהרעיון הראשון <b>ועד לתוצאה</b></h2>
   <div class="process__rail">
     <div class="process__line"><i></i></div>
@@ -314,51 +339,48 @@
     </div>
   </div>
   <div class="process__cta">
-    <a class="btn btn--wa btn--lg" href="#" data-wa><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg>מתחילים בשיחת היכרות</a>
-    <a class="btn btn--line btn--lg" href="tel:+972542059860">054-2059860 ☎</a>
+    <a class="cta cta--light cta--lg" href="#" data-wa><i class="cta__dot"></i>מתחילים בשיחת היכרות</a>
   </div>
 </section>
 
-<!-- ============ 09 CONTACT ============ -->
-<section class="screen dark contact" id="contact" data-title="צור קשר" data-theme="dark">
-  <div class="contact__bg"><video src="assets/video/dining.mp4" muted loop playsinline preload="none"></video></div>
-  <div class="eyebrow"><b class="lbl">09</b><span class="lbl">Let's talk</span></div>
-  <div class="contact__big" aria-hidden="true">LET'S <span>TALK</span></div>
-  <div class="contact__grid">
-    <div>
-      <h2 class="h-l split">בואו נתכנן את <b>הפרויקט הבא שלכם</b></h2>
-      <p>לתיאום שיחת היכרות ולקבלת פרטים על תכנון ועיצוב פנים, פיקוח וניהול פרויקטים.</p>
-      <a class="contact__wa" href="#" data-wa>
-        <span class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg></span>
-        <span><small>דברו איתי בוואטסאפ</small><b>054-2059860</b></span>
-      </a>
-      <div class="contact__alt">
-        <a href="tel:+972542059860">התקשרו אליי ☎ 054-2059860</a>
+<!-- ============ 10 CONTACT ============ -->
+<section class="screen contact" id="contact" data-title="צור קשר" data-theme="dark">
+  <div class="contact__inner">
+    <div class="eyebrow eyebrow--center"><b class="lbl">10</b><span class="lbl">Let's talk</span></div>
+    <div class="contact__big" aria-hidden="true">LET'S <span>TALK</span></div>
+    <h2 class="h-l split">בואו נתכנן את <b>הפרויקט הבא שלכם</b></h2>
+    <p class="contact__lead">לתיאום שיחת היכרות ולקבלת פרטים על תכנון ועיצוב פנים, פיקוח וניהול פרויקטים.</p>
+    <form class="note" novalidate>
+      <div class="note__head"><span class="lbl">Project brief</span><span class="lbl">No. 001</span></div>
+      <div class="note__row">
+        <label for="c-name">שם</label>
+        <input id="c-name" name="name" autocomplete="name" placeholder="איך קוראים לך?">
       </div>
-    </div>
-    <form class="composer" novalidate>
-      <h3>הודעה מוכנה לוואטסאפ</h3>
-      <p>ממלאים שתי שורות — ההודעה נפתחת בוואטסאפ מוכנה לשליחה.</p>
-      <label for="c-name">שם</label>
-      <input id="c-name" name="name" autocomplete="name" placeholder="איך קוראים לך?">
-      <label>סוג הפרויקט</label>
-      <div class="chips" role="group" aria-label="סוג הפרויקט">
-        <button type="button" class="chip" aria-pressed="true">דירה / בית</button>
-        <button type="button" class="chip" aria-pressed="false">מוסד / קהילה</button>
-        <button type="button" class="chip" aria-pressed="false">משרד / עסק</button>
-        <button type="button" class="chip" aria-pressed="false">פיקוח בלבד</button>
+      <div class="note__row">
+        <span class="note__lbl">סוג הפרויקט</span>
+        <div class="chips" role="group" aria-label="סוג הפרויקט">
+          <button type="button" class="chip" aria-pressed="true">דירה / בית</button>
+          <button type="button" class="chip" aria-pressed="false">מוסד / קהילה</button>
+          <button type="button" class="chip" aria-pressed="false">משרד / עסק</button>
+          <button type="button" class="chip" aria-pressed="false">פיקוח בלבד</button>
+        </div>
       </div>
-      <button class="btn btn--wa btn--lg" type="submit"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg>שליחה בוואטסאפ</button>
+      <button class="cta cta--solid cta--lg note__send" type="submit"><i class="cta__dot"></i>שליחת הודעה</button>
     </form>
+    <div class="contact__alt"><a href="tel:+972542059860">התקשרו אליי · <span class="en">054-2059860</span></a></div>
   </div>
 </section>
 
 <footer class="footer">
+  <div class="footer__top">
+    <svg class="wordmark" data-wordmark></svg>
+    <span>אוריאל רוזנבאום | תכנון ועיצוב פנים, פיקוח וניהול פרויקטים</span>
+  </div>
   <div class="titleblock">
-    <div><small class="lbl">Studio</small><svg class="wordmark" data-wordmark></svg><span>אוריאל רוזנבאום | תכנון ועיצוב פנים, פיקוח וניהול פרויקטים</span></div>
     <div><small class="lbl">Phone</small><a href="tel:+972542059860" class="en">054-2059860</a></div>
-    <div><small class="lbl">WhatsApp</small><a href="#" data-wa>✆ דברו איתי בוואטסאפ</a></div>
-    <div><small class="lbl">Projects</small><a href="#projects">פרויקטים נבחרים</a></div>
+    <div><small class="lbl">Email</small><span class="en">[email]</span><span class="demo">חסר</span></div>
+    <div><small class="lbl">Facebook</small><span>[עמוד פייסבוק]</span><span class="demo">חסר</span></div>
+    <div><small class="lbl">WhatsApp</small><a href="#" data-wa>דברו איתי</a></div>
     <div><small class="lbl">Home</small><a href="#home">חזרה למסך הראשי ↑</a></div>
   </div>
   <div class="footnote"><span>© <span class="year"></span> רוזנבאום — תכנון ועיצוב פנים</span><span>הדמיות: סטודיו רוזנבאום · סרטוני אווירה: Pexels</span></div>
@@ -366,22 +388,18 @@
 
 </main>
 
-<!-- floating WhatsApp (desktop) -->
-<a class="wa-float" href="#" data-wa aria-label="דברו איתי בוואטסאפ 054-2059860">
-  <span class="wa-float__btn"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg></span>
-</a>
-<!-- sticky bar (mobile) -->
-<div class="mbar">
-  <a class="btn btn--wa" href="#" data-wa><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg>וואטסאפ 054-2059860</a>
-  <a class="btn btn--line" href="tel:+972542059860">התקשרו ☎</a>
-</div>
+<!-- the only WhatsApp button: a round icon -->
+<a class="wa-float" href="#" data-wa aria-label="וואטסאפ 054-2059860"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg></a>
+
+<!-- product detail (opened from project pins) -->
+<div class="detail" hidden><div class="detail__img"></div><div class="detail__txt"><b></b><span class="lbl"></span></div><button class="detail__close" aria-label="סגירה">×</button></div>
 
 <!-- project gallery lightbox -->
 <div class="lightbox" role="dialog" aria-modal="true" aria-label="גלריית פרויקט" hidden>
   <div class="lightbox__bar">
     <div><span class="disp lightbox__type"></span><h3 class="lightbox__title"></h3></div>
     <div style="display:flex;gap:10px;align-items:center">
-      <a class="btn btn--wa" href="#" data-wa="שלום אוריאל, ראיתי את הפרויקטים באתר ואשמח לשמוע על פרויקט דומה"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg>רוצים פרויקט כזה?</a>
+      <a class="cta cta--light" href="#" data-wa="שלום אוריאל, ראיתי את הפרויקטים באתר ואשמח לשמוע על פרויקט דומה"><i class="cta__dot"></i>רוצים פרויקט כזה?</a>
       <button class="lightbox__close" aria-label="סגירה">×</button>
     </div>
   </div>
@@ -391,14 +409,10 @@
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <filter id="fx-paper" color-interpolation-filters="sRGB">
-    <feColorMatrix type="saturate" values="0"/>
+    <feColorMatrix type="saturate" values="0"/><feGaussianBlur stdDeviation="1.2"/>
     <feConvolveMatrix order="3" kernelMatrix="-1 -1 -1 -1 8 -1 -1 -1 -1" preserveAlpha="true"/>
-    <feComponentTransfer><feFuncR type="linear" slope="-5" intercept="1"/><feFuncG type="linear" slope="-5.4" intercept="1"/><feFuncB type="linear" slope="-6" intercept="1"/></feComponentTransfer>
-  </filter>
-  <filter id="fx-glow" color-interpolation-filters="sRGB">
-    <feColorMatrix type="saturate" values="0"/>
-    <feConvolveMatrix order="3" kernelMatrix="-1 -1 -1 -1 8 -1 -1 -1 -1" preserveAlpha="true"/>
-    <feComponentTransfer><feFuncR type="linear" slope="5"/><feFuncG type="linear" slope="3.6"/><feFuncB type="linear" slope="2.4"/></feComponentTransfer>
+    <feComponentTransfer><feFuncR type="linear" slope="-14" intercept="1.15"/><feFuncG type="linear" slope="-14" intercept="1.15"/><feFuncB type="linear" slope="-14" intercept="1.15"/></feComponentTransfer>
+    <feComponentTransfer><feFuncR type="discrete" tableValues="0.18 0.55 0.92 1 1"/><feFuncG type="discrete" tableValues="0.16 0.52 0.9 1 1"/><feFuncB type="discrete" tableValues="0.14 0.48 0.86 1 1"/></feComponentTransfer>
   </filter>
   <symbol id="i-wa" viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2c.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3Z"/></symbol>
 </svg>
