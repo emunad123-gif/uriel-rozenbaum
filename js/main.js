@@ -4,275 +4,355 @@
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const fine = matchMedia('(pointer: fine)').matches;
-  const hasGSAP = typeof window.gsap !== 'undefined';
+  const G = window.gsap;
+  const PHONE = '972542059860';
+  const WA_DEFAULT = 'שלום אוריאל, הגעתי דרך האתר ואשמח לקבל פרטים';
+  const waLink = text => `https://wa.me/${PHONE}?text=${encodeURIComponent(text || WA_DEFAULT)}`;
 
-  /* ---------- wordmark injection ---------- */
+  /* ---------- projects (from the studio's portfolio) ---------- */
+  const PROJECTS = [
+    { name: 'מרכז מלכתא | נשי חב״ד צפת', type: 'Community Center', scope: 'תכנון ועיצוב פנים · פיקוח וניהול הפרויקט', kind: 'מרכז קהילתי',
+      desc: 'מרכז רב־תכליתי המשלב חללי אירוח, התכנסות, פעילות, משרדים וחדר כושר. שפה עיצובית אלגנטית, חומרים בהירים ופרטי תאורה עשירים.',
+      light: [50, 18], images: ['1000499986', '1000509378', '1000500028', '1000499978', '1000509382', '1000500033', '1000500029'] },
+    { name: 'בית חב״ד נאות פרס | חיפה', type: 'Community Space', scope: 'תכנון ועיצוב פנים · פיקוח עליון', kind: 'חלל קהילתי',
+      desc: 'תכנון חללי התכנסות ולימוד, מטבח ומשרד בסביבה חמימה, שימושית ומזמינה. שילוב קשתות, גוונים טבעיים וחיפויי עץ.',
+      light: [45, 15], images: ['1000429748', '1000429875', '1000429874', '1000431507'] },
+    { name: 'מועדונית נוער', type: 'Leisure & Community', scope: 'תכנון ועיצוב פנים בלבד', kind: 'פנאי וקהילה',
+      desc: 'מרחב נוער צבעוני וגמיש הכולל אזורי ישיבה, פעילות חברתית ומשחק, תוך שילוב חומרים חמים ופלטת צבעים צעירה.',
+      light: [62, 22], images: ['1000661922', '1000661732', '1000661792', '1000661845', '1000661868', '1000661870', '1000661873', '1000661920', '1000661925', '1000661927'] },
+    { name: 'מעבדת אלקטרוניקה', type: 'Workspace', scope: 'תכנון ועיצוב פנים בלבד', kind: 'סביבת עבודה',
+      desc: 'סביבת עבודה טכנולוגית מוקפדת עם עמדות עבודה מרובות, אזור משרדי נפרד ושילוב של גוונים כהים, כחול עמוק ותאורה פונקציונלית.',
+      light: [50, 12], images: ['1000640605', '1000640601', '1000640604', '1000640656'] },
+    { name: 'דירת יוקרה', type: 'Residential', scope: 'תכנון ועיצוב פנים · פיקוח עליון', kind: 'מגורים',
+      desc: 'חללי מגורים בהירים עם דגש על פרופורציות, נגרות מותאמת, תאורה רכה וחומרים טבעיים.',
+      light: [55, 30], images: ['1000796498', '1000796844', '1000796532', '1000796533', '1000796595', '1000796670', '1000796843'] },
+  ];
+  const img = id => `assets/img/p/${id}.webp`;
+
+  /* ---------- wordmark ---------- */
   const WM = window.WORDMARK;
   $$('[data-wordmark]').forEach(svg => {
     if (!WM) return;
-    svg.setAttribute('viewBox', `0 0 ${WM.w} ${WM.h}`);
+    svg.setAttribute('viewBox', WM.vb);
     svg.setAttribute('role', 'img');
-    svg.setAttribute('aria-label', 'Uriel Rozenbaum');
-    svg.innerHTML = `<path d="${WM.d}"/>`;
+    svg.setAttribute('aria-label', 'Rozenbaum');
+    svg.innerHTML = `<g stroke-width="${WM.sw}">${WM.paths.map(d => `<path d="${d}"/>`).join('')}</g><path class="cord" d="${WM.cord}" stroke-width="${WM.sw * .45}"/><circle class="dot" cx="${WM.dot[0]}" cy="${WM.dot[1]}" r="${WM.sw * 1.9}"/>`;
   });
+
+  /* ---------- WhatsApp links ---------- */
+  $$('[data-wa]').forEach(a => {
+    a.href = waLink(a.dataset.wa);
+    a.target = '_blank'; a.rel = 'noopener';
+  });
+  $$('.year').forEach(y => y.textContent = new Date().getFullYear());
 
   /* ---------- split words ---------- */
   $$('.split').forEach(el => {
-    const walk = node => {
-      [...node.childNodes].forEach(n => {
-        if (n.nodeType === 3) {
-          const frag = document.createDocumentFragment();
-          n.textContent.split(/(\s+)/).forEach(part => {
-            if (!part) return;
-            if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
-            const w = document.createElement('span'); w.className = 'w';
-            const i = document.createElement('span'); i.textContent = part;
-            w.appendChild(i); frag.appendChild(w);
-          });
-          n.replaceWith(frag);
-        } else if (n.nodeType === 1 && !n.classList.contains('script')) {
-          walk(n);
-        } else if (n.nodeType === 1) {
-          const w = document.createElement('span'); w.className = 'w';
-          n.replaceWith(w); const i = document.createElement('span'); i.appendChild(n); w.appendChild(i);
-        }
-      });
-    };
-    walk(el);
-  });
-
-  /* manifesto words for scrub */
-  $$('[data-words]').forEach(el => {
-    [...el.childNodes].forEach(n => {
+    const walk = node => [...node.childNodes].forEach(n => {
       if (n.nodeType === 3) {
         const frag = document.createDocumentFragment();
         n.textContent.split(/(\s+)/).forEach(part => {
-          if (!part.trim()) { frag.appendChild(document.createTextNode(part)); return; }
-          const s = document.createElement('span'); s.className = 'mw'; s.textContent = part; frag.appendChild(s);
+          if (!part) return;
+          if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
+          const w = document.createElement('span'); w.className = 'w';
+          const i = document.createElement('span'); i.textContent = part; w.appendChild(i); frag.appendChild(w);
         });
         n.replaceWith(frag);
-      } else if (n.nodeType === 1) n.classList.add('mw');
+      } else if (n.nodeType === 1 && n.tagName !== 'BR') walk(n);
     });
+    walk(el);
   });
 
   /* ---------- menu ---------- */
   const burger = $('.burger'), menu = $('.menu');
-  const toggleMenu = open => {
-    menu.classList.toggle('is-open', open);
-    burger.setAttribute('aria-expanded', open);
-  };
+  const toggleMenu = open => { menu.classList.toggle('is-open', open); burger.setAttribute('aria-expanded', open); };
   burger.addEventListener('click', () => toggleMenu(!menu.classList.contains('is-open')));
   $$('a', menu).forEach(a => a.addEventListener('click', () => toggleMenu(false)));
 
-  /* ---------- compare slider ---------- */
-  const cmp = $('.compare');
-  const range = $('input', cmp);
-  const setPos = v => cmp.style.setProperty('--pos', v + '%');
-  range.addEventListener('input', () => setPos(range.value));
+  /* ---------- sections: header theme, active nav, side dots ---------- */
+  const screens = $$('main > section[data-title]');
+  const header = $('.header'), dots = $('.dots'), waFloat = $('.wa-float');
+  screens.forEach(s => {
+    const a = document.createElement('a'); a.href = '#' + s.id; a.setAttribute('aria-label', s.dataset.title);
+    a.innerHTML = `<span>${s.dataset.title}</span>`; dots.appendChild(a);
+  });
+  const setActive = s => {
+    const id = s.id;
+    $$('.nav a, .dots a').forEach(a => a.classList.toggle('is-active', a.getAttribute('href') === '#' + id));
+    header.classList.toggle('is-dark', s.dataset.theme === 'dark' && id !== 'home');
+    header.classList.toggle('is-light', s.dataset.theme === 'light');
+    waFloat.classList.toggle('is-visible', id !== 'home' && id !== 'contact');
+  };
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { setActive(e.target); e.target.dispatchEvent(new CustomEvent('screen:enter')); } });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  screens.forEach(s => io.observe(s));
 
-  /* ---------- cursor ---------- */
+  /* play videos only while their screen is visible */
+  const vio = new IntersectionObserver(es => es.forEach(e => {
+    $$('video', e.target).forEach(v => e.isIntersecting ? v.play().catch(() => {}) : v.pause());
+  }), { threshold: .2 });
+  screens.forEach(s => $('video', s) && vio.observe(s));
+
+  /* ---------- cursor (quiet dot) ---------- */
   if (fine && !reduced) {
-    document.body.classList.add('has-cursor');
-    const c = $('.cursor'), h = $('.cursor__h'), v = $('.cursor__v'), dot = $('.cursor__dot'), xy = $('.cursor__xy'), label = $('span', dot);
-    let mx = innerWidth / 2, my = innerHeight / 2, dx = mx, dy = my;
+    const c = $('.cursor'), dot = $('.cursor__dot'), label = $('span', dot);
+    let mx = -100, my = -100, dx = mx, dy = my;
     addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-    const pad = n => String(Math.round(n)).padStart(4, '0');
-    const loop = () => {
-      dx += (mx - dx) * .2; dy += (my - dy) * .2;
-      h.style.transform = `translateY(${my}px)`; v.style.transform = `translateX(${mx}px)`;
-      dot.style.transform = `translate(${dx}px, ${dy}px)`;
-      xy.style.transform = `translate(${mx + 14}px, ${my + 12}px)`;
-      xy.textContent = `X ${pad(mx)} · Y ${pad(my + scrollY)}`;
-      requestAnimationFrame(loop);
-    };
-    loop();
+    (function loop() { dx += (mx - dx) * .22; dy += (my - dy) * .22; c.style.transform = `translate(${dx}px, ${dy}px)`; requestAnimationFrame(loop); })();
     document.addEventListener('mouseover', e => {
-      const t = e.target.closest('[data-cursor], a, button');
+      const t = e.target.closest('[data-cursor], a, button, input');
       const txt = t && t.dataset.cursor;
       c.classList.toggle('is-hover', !!txt);
+      c.classList.toggle('is-link', !!t && !txt);
       if (txt) label.textContent = txt;
     });
   }
 
-  /* ---------- header behaviour ---------- */
-  const header = $('.header'), wa = $('.wa-float');
-  let lastY = 0;
-  const onScroll = y => {
-    header.classList.toggle('is-scrolled', y > innerHeight * .85);
-    header.classList.toggle('is-hidden', y > lastY && y > innerHeight && !menu.classList.contains('is-open'));
-    wa.classList.toggle('is-visible', y > innerHeight * .6);
-    lastY = y;
+  /* ==========================================================
+     HERO — light switch
+     ========================================================== */
+  const hero = $('.hero'), scene = $('.scene'), lit = $('.scene__lit'), flare = $('.scene__flare');
+  const sw = $('.switch'), swLbl = $('.switch__lbl');
+  let heroOn = false, touched = false;
+  const setLight = (on, x = 48, y = 25) => {
+    heroOn = on;
+    scene.style.setProperty('--lx', x + '%'); scene.style.setProperty('--ly', y + '%');
+    hero.classList.toggle('is-lit', on);
+    sw.classList.toggle('is-on', on); sw.setAttribute('aria-pressed', on);
+    swLbl.textContent = on ? 'Lights on' : 'Lights off';
+    $$('.hot').forEach(h => { h.classList.toggle('is-on', on); h.textContent = on ? 'OFF' : 'ON'; h.dataset.cursor = on ? 'OFF' : 'ON'; });
+    if (G && !reduced) {
+      G.to(lit, { clipPath: `circle(${on ? 150 : 0}% at ${x}% ${y}%)`, duration: on ? 1.8 : 1, ease: on ? 'expo.inOut' : 'power3.inOut' });
+      if (on) G.fromTo(flare, { opacity: .9, scale: .2 }, { opacity: 0, scale: 2.4, duration: 1.6, ease: 'expo.out' });
+    } else {
+      lit.style.clipPath = on ? 'none' : `circle(0% at ${x}% ${y}%)`;
+    }
   };
+  $$('.hot').forEach(h => h.addEventListener('click', () => {
+    touched = true; const [x, y] = h.dataset.light.split(',').map(Number); setLight(!heroOn, x, y);
+  }));
+  sw.addEventListener('click', () => { touched = true; setLight(!heroOn); });
 
-  /* ---------- no GSAP fallback ---------- */
+  /* ==========================================================
+     PROJECTS — light-up slider + gallery
+     ========================================================== */
+  const stage = $('.stage'), thumbs = $('.thumbs'), info = $('.works__info');
+  stage.innerHTML = PROJECTS.map((p, i) => `
+    <div class="slide" style="--lx:${p.light[0]}%;--ly:${p.light[1]}%">
+      <img class="slide__dark" src="${img(p.images[0])}" alt="" loading="${i ? 'lazy' : 'eager'}">
+      <img class="slide__lit" src="${img(p.images[0])}" alt="${p.name}" loading="${i ? 'lazy' : 'eager'}">
+      <div class="slide__tag"><span class="lbl">${p.type}</span></div>
+      <span class="slide__num">0${i + 1}</span>
+    </div>`).join('') + `<div class="stage__bulb"><i></i><span class="bulb__txt">האור כבוי</span></div>`;
+  thumbs.innerHTML = PROJECTS.map(p => `<button aria-label="${p.name}"><img src="${img(p.images[0])}" alt="" loading="lazy"><i></i></button>`).join('');
+  const slides = $$('.slide', stage), tbtns = $$('button', thumbs);
+  let cur = -1, timer = null, worksVisible = false;
+  const fill = p => {
+    $('[data-p="type"]', info).innerHTML = `${p.kind} <span class="lbl" style="opacity:.6">· ${p.type}</span>`;
+    $('[data-p="name"]', info).textContent = p.name;
+    $('[data-p="desc"]', info).textContent = p.desc;
+    $('[data-p="scope"]', info).textContent = p.scope;
+    $('[data-p="count"]', info).textContent = p.images.length + ' הדמיות';
+  };
+  const go = i => {
+    i = (i + PROJECTS.length) % PROJECTS.length;
+    if (i === cur) return;
+    const prev = slides[cur]; cur = i;
+    const s = slides[i], p = PROJECTS[i];
+    slides.forEach(x => x.classList.toggle('is-active', x === s));
+    tbtns.forEach((b, k) => b.classList.toggle('is-active', k === i));
+    $('.works__count').innerHTML = `<b>0${i + 1}</b> / 0${PROJECTS.length}`;
+    stage.classList.remove('is-lit'); $('.bulb__txt').textContent = 'האור כבוי';
+    const litImg = $('.slide__lit', s), darkImg = $('.slide__dark', s);
+    if (G && !reduced) {
+      G.killTweensOf([litImg, darkImg, info]);
+      G.set(litImg, { clipPath: `circle(0% at ${p.light[0]}% ${p.light[1]}%)` });
+      G.fromTo([darkImg, litImg], { scale: 1.12 }, { scale: 1, duration: 2.4, ease: 'expo.out' });
+      G.to(litImg, { clipPath: `circle(150% at ${p.light[0]}% ${p.light[1]}%)`, duration: 1.7, delay: .55, ease: 'expo.inOut',
+        onStart: () => { stage.classList.add('is-lit'); $('.bulb__txt').textContent = 'האור דלוק'; } });
+      if (prev) G.fromTo(s, { clipPath: 'inset(0 0 0 100%)' }, { clipPath: 'inset(0 0 0 0%)', duration: 1, ease: 'expo.inOut' });
+      G.timeline().to(info, { opacity: 0, y: 14, duration: .25 }).add(() => fill(p)).to(info, { opacity: 1, y: 0, duration: .6, ease: 'expo.out' });
+    } else { fill(p); litImg.style.clipPath = 'none'; stage.classList.add('is-lit'); }
+    restartAuto();
+  };
+  const restartAuto = () => {
+    clearTimeout(timer);
+    tbtns.forEach(b => { const bar = $('i', b); bar.style.transition = 'none'; bar.style.transform = 'scaleX(0)'; });
+    if (!worksVisible || reduced || cur < 0) return;
+    const bar = $('i', tbtns[cur]);
+    requestAnimationFrame(() => requestAnimationFrame(() => { bar.style.transition = 'transform 7s linear'; bar.style.transform = 'scaleX(1)'; }));
+    timer = setTimeout(() => go(cur + 1), 7000);
+  };
+  tbtns.forEach((b, i) => b.addEventListener('click', () => go(i)));
+  $('.works__next').addEventListener('click', () => go(cur + 1));
+  $('.works__prev').addEventListener('click', () => go(cur - 1));
+  go(0);
+  new IntersectionObserver(es => es.forEach(e => { worksVisible = e.isIntersecting; restartAuto(); }), { threshold: .5 }).observe($('#projects'));
+
+  /* lightbox */
+  const lb = $('.lightbox'), lbImg = $('.lightbox__main img'), lbStrip = $('.lightbox__strip');
+  let lbP = 0, lbI = 0;
+  const lbShow = i => {
+    const p = PROJECTS[lbP]; lbI = (i + p.images.length) % p.images.length;
+    lbImg.src = img(p.images[lbI]); lbImg.alt = `${p.name} — הדמיה ${lbI + 1}`;
+    $$('button', lbStrip).forEach((b, k) => b.classList.toggle('is-active', k === lbI));
+    if (G && !reduced) G.fromTo(lbImg, { opacity: 0, scale: .98 }, { opacity: 1, scale: 1, duration: .6, ease: 'expo.out' });
+  };
+  const lbOpen = () => {
+    lbP = cur; const p = PROJECTS[lbP];
+    $('.lightbox__title').textContent = p.name; $('.lightbox__type').textContent = p.type;
+    lbStrip.innerHTML = p.images.map(id => `<button><img src="${img(id)}" alt="" loading="lazy"></button>`).join('');
+    $$('button', lbStrip).forEach((b, k) => b.addEventListener('click', () => lbShow(k)));
+    lb.hidden = false; document.body.style.overflow = 'hidden'; clearTimeout(timer); lbShow(0);
+    $('.lightbox__close').focus();
+  };
+  const lbClose = () => { lb.hidden = true; document.body.style.overflow = ''; restartAuto(); };
+  stage.addEventListener('click', lbOpen);
+  $('.works__open').addEventListener('click', lbOpen);
+  $('.lightbox__close').addEventListener('click', lbClose);
+  $('.lightbox__nav--next').addEventListener('click', () => lbShow(lbI + 1));
+  $('.lightbox__nav--prev').addEventListener('click', () => lbShow(lbI - 1));
+  addEventListener('keydown', e => {
+    if (lb.hidden) return;
+    if (e.key === 'Escape') lbClose();
+    if (e.key === 'ArrowLeft') lbShow(lbI + 1);
+    if (e.key === 'ArrowRight') lbShow(lbI - 1);
+  });
+
+  /* ---------- compare slider ---------- */
+  const cmp = $('.compare'), range = $('input', cmp);
+  const setPos = v => cmp.style.setProperty('--pos', v + '%');
+  range.addEventListener('input', () => setPos(range.value));
+
+  /* ---------- composer → WhatsApp ---------- */
+  const form = $('.composer');
+  $$('.chip', form).forEach(ch => ch.addEventListener('click', () => $$('.chip', form).forEach(x => x.setAttribute('aria-pressed', x === ch))));
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const name = $('#c-name').value.trim();
+    const kind = $('.chip[aria-pressed="true"]', form).textContent.trim();
+    const text = `שלום אוריאל, ${name ? 'אני ' + name + ', ' : ''}הגעתי דרך האתר ואשמח לקבל פרטים על פרויקט: ${kind}`;
+    window.open(waLink(text), '_blank', 'noopener');
+  });
+
+  /* ==========================================================
+     ANIMATIONS
+     ========================================================== */
   const finishLoad = () => { document.body.classList.remove('is-loading'); const l = $('.loader'); l && l.remove(); };
-  if (!hasGSAP || reduced) {
-    finishLoad();
-    addEventListener('scroll', () => onScroll(scrollY), { passive: true });
-    $$('.mw').forEach(w => w.style.opacity = 1);
-    $$('video').forEach(v => v.play && v.play().catch(() => {}));
+  if (!G || reduced) {
+    finishLoad(); setPos(50);
+    $$('[data-count]').forEach(n => n.textContent = Number(n.dataset.count).toLocaleString('en-US'));
+    $$('.step').forEach(s => s.classList.add('is-on'));
+    setTimeout(() => setLight(true), 600);
     return;
   }
 
-  gsap.registerPlugin(ScrollTrigger);
+  G.ticker.lagSmoothing(0);
 
-  /* ---------- smooth scroll ---------- */
-  let lenis = null;
-  if (window.Lenis) {
-    lenis = new Lenis({ duration: 1.15, smoothWheel: true });
-    lenis.on('scroll', e => { ScrollTrigger.update(); onScroll(e.scroll); });
-    gsap.ticker.add(t => lenis.raf(t * 1000));
-    gsap.ticker.lagSmoothing(0);
-    lenis.stop();
-  } else {
-    addEventListener('scroll', () => onScroll(scrollY), { passive: true });
-  }
-  $$('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
-    const id = a.getAttribute('href'); const t = id === '#top' ? 0 : $(id);
-    if (t === null) return;
-    e.preventDefault();
-    lenis ? lenis.scrollTo(t, { duration: 1.6 }) : (t === 0 ? scrollTo({ top: 0, behavior: 'smooth' }) : t.scrollIntoView({ behavior: 'smooth' }));
-  }));
+  /* preloader: strokes draw, the lamp drops, then it lights up */
+  const lcord = $('.loader .wordmark .cord');
+  G.set(lcord, { scaleY: 0, transformOrigin: '50% 0%' });
+  const lpaths = $$('.loader .wordmark g path'), ldot = $('.loader .wordmark .dot'), glow = $('.loader__glow');
+  lpaths.forEach(p => { const L = p.getTotalLength(); G.set(p, { strokeDasharray: L, strokeDashoffset: L }); });
+  G.set(ldot, { scale: 0, transformOrigin: '50% 50%', fill: '#3a302a' });
+  const count = { v: 0 }, cEl = $('.loader__count');
+  const tl = G.timeline();
+  tl.to(lpaths, { strokeDashoffset: 0, duration: 1.3, stagger: .05, ease: 'power2.inOut' }, .1)
+    .to(count, { v: 100, duration: 2.1, ease: 'power2.inOut', onUpdate: () => cEl.textContent = String(Math.round(count.v)).padStart(3, '0') }, 0)
+    .to(lcord, { scaleY: 1, duration: .45, ease: 'power2.out' }, 1.25)
+    .fromTo(ldot, { scale: 0, y: -40 }, { scale: 1, y: 0, duration: .7, ease: 'bounce.out' }, 1.35)
+    .to(ldot, { fill: '#FFB070', duration: .25, ease: 'power1.in' }, 1.95)
+    .add(() => {
+      const r = ldot.getBoundingClientRect();
+      G.set(glow, { left: r.left + r.width / 2, top: r.top + r.height / 2 });
+      ldot.style.filter = 'drop-shadow(0 0 12px rgba(255,170,90,.95))';
+    }, 1.95)
+    .fromTo(glow, { opacity: 0, scale: .2 }, { opacity: 1, scale: 1, duration: .8, ease: 'expo.out' }, 1.95)
+    .to('.loader', { clipPath: 'circle(0% at 50% 50%)', duration: 1.1, ease: 'expo.inOut' }, 2.55)
+    .add(() => finishLoad(), 3.4)
+    .add(heroIntro(), 2.9);
 
-  /* ---------- preloader ---------- */
-  const loader = $('.loader');
-  const wmPath = $('.loader .wordmark path');
-  const tl = gsap.timeline({ defaults: { ease: 'power3.inOut' } });
-  const count = { v: 0 }, countEl = $('.loader__count');
-  if (wmPath) {
-    const len = 9000;
-    gsap.set(wmPath, { strokeDasharray: len, strokeDashoffset: len });
-    tl.to(wmPath, { strokeDashoffset: 0, duration: 2.1, ease: 'power2.inOut' }, 0.15)
-      .to(wmPath, { fill: '#15120F', strokeWidth: 0, duration: .6 }, '-=.5');
-  }
-  $$('.loader__lines line').forEach((l, i) => {
-    const horiz = l.getAttribute('y1') === l.getAttribute('y2');
-    gsap.set(l, { scaleX: horiz ? 0 : 1, scaleY: horiz ? 1 : 0, transformOrigin: horiz ? '0% 50%' : '50% 0%' });
-    tl.to(l, { scaleX: 1, scaleY: 1, duration: 1.1 }, .05 + i * .12);
-  });
-  tl.to(count, { v: 100, duration: 2.6, ease: 'power2.inOut', onUpdate: () => countEl.textContent = String(Math.round(count.v)).padStart(3, '0') }, 0)
-    .to('.loader__inner', { scale: .94, opacity: 0, duration: .7, ease: 'power2.in' }, '+=.15')
-    .to(loader, { clipPath: 'inset(0 0 100% 0)', duration: 1.1, ease: 'expo.inOut' }, '-=.2')
-    .add(() => { finishLoad(); lenis && lenis.start(); ScrollTrigger.refresh(); }, '-=.35')
-    .add(heroIntro(), '-=.75');
-
-  /* ---------- hero intro ---------- */
   function heroIntro() {
-    const t = gsap.timeline();
-    const script = $('.hero__script');
-    // split script into chars for a handwriting-like cascade
-    const txt = script.textContent; script.textContent = '';
-    [...txt].forEach(ch => { const s = document.createElement('span'); s.className = 'char'; s.textContent = ch === ' ' ? ' ' : ch; script.appendChild(s); });
-    t.from('.hero__media video', { scale: 1.35, duration: 2.4, ease: 'expo.out' }, 0)
-     .from('.hero__script .char', { yPercent: 60, opacity: 0, filter: 'blur(12px)', duration: 1.4, stagger: .045, ease: 'expo.out' }, .1)
-     .from('.hero__he .w > span', { yPercent: 110, duration: 1.1, stagger: .06, ease: 'expo.out' }, .6)
-     .from('.hero__frame .hl', { scaleX: 0, transformOrigin: '50% 50%', duration: 1.6, ease: 'expo.inOut' }, .2)
-     .from('.hero__frame .vl', { scaleY: 0, transformOrigin: '50% 50%', duration: 1.6, ease: 'expo.inOut' }, .3)
-     .from('.hero__dim, .hero__bottom > *, .header', { opacity: 0, y: 16, duration: 1, stagger: .08, ease: 'power3.out' }, .9)
-     .from('.hero__floating', { opacity: 0, scale: .8, duration: 1.2, stagger: .2, ease: 'expo.out' }, 1.1);
+    const t = G.timeline();
+    t.from('.hero h1 .w > span', { yPercent: 115, duration: 1.1, stagger: .06, ease: 'expo.out' }, .2)
+     .from('.hero__eyebrow, .hero__lead, .hero__ctas > *, .switch', { opacity: 0, y: 20, duration: 1, stagger: .08, ease: 'power3.out' }, .5)
+     .from('.header > *', { opacity: 0, y: -14, duration: .9, stagger: .08, ease: 'power3.out' }, .4)
+     .from('.hot', { opacity: 0, duration: .8, stagger: .15 }, .9)
+     .from('.hero__hint', { opacity: 0, duration: 1 }, 1)
+     .add(() => setTimeout(() => { if (!touched && !heroOn) setLight(true, 48, 25); }, 2400));
     return t;
   }
 
-  /* hero scroll parallax */
-  gsap.to('.hero__media video', { yPercent: 18, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
-  gsap.to('.hero__content', { yPercent: -30, opacity: 0, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
-  gsap.to('.hero__floating--1', { y: -160, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
-  gsap.to('.hero__floating--2', { y: -60, x: 60, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
-
-  /* ---------- split headline reveals ---------- */
-  $$('.split').forEach(el => {
-    if (el.closest('.hero')) return;
-    gsap.from($$('.w > span', el), { yPercent: 115, rotate: 3, duration: 1.2, stagger: .06, ease: 'expo.out',
-      scrollTrigger: { trigger: el, start: 'top 85%' } });
+  /* per-screen reveal — each screen animates once when it arrives */
+  const revealed = new Set();
+  const reveal = (sel, fn) => { const s = $(sel); s && s.addEventListener('screen:enter', () => { if (revealed.has(sel)) return; revealed.add(sel); fn(s); }); };
+  const baseIn = s => {
+    G.from($$('.split .w > span', s), { yPercent: 115, duration: 1.1, stagger: .05, ease: 'expo.out' });
+    G.from($$('.eyebrow, .screen__head p', s), { opacity: 0, y: 20, duration: 1, stagger: .08, ease: 'power3.out' });
+  };
+  reveal('#projects', s => {
+    baseIn(s);
+    G.from('.stage', { clipPath: 'inset(12% 12% 12% 12% round 30px)', duration: 1.4, ease: 'expo.out' });
+    G.from('.thumbs button', { y: 30, opacity: 0, duration: .8, stagger: .06, ease: 'expo.out', delay: .3 });
+    G.from('.works__ctrl, .works__text .btn', { opacity: 0, x: 30, duration: 1, stagger: .1, ease: 'expo.out', delay: .2 });
   });
-  $$('.eyebrow').forEach(el => gsap.from(el, { opacity: 0, x: 30, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 90%' } }));
-
-  /* ---------- manifesto word scrub ---------- */
-  const mws = $$('.manifesto__text .mw');
-  gsap.to(mws, { opacity: 1, stagger: .1, ease: 'none',
-    scrollTrigger: { trigger: '.manifesto__text', start: 'top 78%', end: 'bottom 45%', scrub: .6 } });
-  $$('.inline-img').forEach(el => gsap.from(el, { width: 0, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 80%' } }));
-  gsap.from('.manifesto__sig', { clipPath: 'inset(0 100% 0 0)', duration: 2, ease: 'power2.inOut', scrollTrigger: { trigger: '.manifesto__sig', start: 'top 90%' } });
-
-  /* ---------- compare: auto sweep on enter ---------- */
-  const sweep = { v: 92 };
-  ScrollTrigger.create({
-    trigger: cmp, start: 'top 70%', once: true,
-    onEnter: () => {
-      gsap.fromTo(sweep, { v: 92 }, { v: 50, duration: 2.2, ease: 'expo.inOut', onUpdate: () => { setPos(sweep.v); range.value = sweep.v; } });
-    }
+  reveal('#about', s => {
+    baseIn(s);
+    G.from('.about__text p, .about__ctas', { opacity: 0, y: 24, duration: 1, stagger: .1, ease: 'power3.out', delay: .2 });
+    $$('.about__sign g path').forEach(p => { const L = p.getTotalLength(); G.fromTo(p, { strokeDasharray: L, strokeDashoffset: L }, { strokeDashoffset: 0, duration: 1.4, delay: .4, ease: 'power2.inOut' }); });
+    G.from('.about__sign .dot', { scale: 0, transformOrigin: '50% 50%', duration: .6, delay: 1.6, ease: 'back.out(3)' });
+    G.from('.stat', { opacity: 0, y: 50, duration: 1.1, stagger: .1, ease: 'expo.out' });
+    $$('[data-count]').forEach(n => { const o = { v: 0 }; G.to(o, { v: +n.dataset.count, duration: 2.2, delay: .3, ease: 'power3.out', onUpdate: () => n.textContent = Math.round(o.v).toLocaleString('en-US') }); });
   });
-  setPos(92); range.value = 92;
-  gsap.from('.compare__overlay > *', { opacity: 0, duration: .8, stagger: .08, scrollTrigger: { trigger: cmp, start: 'top 70%' } });
-  gsap.from(cmp, { clipPath: 'inset(12% 12% 12% 12% round 24px)', duration: 1.6, ease: 'expo.out', scrollTrigger: { trigger: cmp, start: 'top 85%' } });
-
-  /* ---------- projects horizontal ---------- */
-  const mm = gsap.matchMedia();
-  mm.add('(min-width: 861px)', () => {
-    const track = $('.projects__track');
-    const dist = () => track.scrollWidth - innerWidth;
-    const st = gsap.to(track, {
-      x: () => dist(), ease: 'none',
-      scrollTrigger: { trigger: '.projects', pin: '.projects__pin', start: 'top top', end: () => '+=' + dist(), scrub: 1, invalidateOnRefresh: true }
+  reveal('#services', s => {
+    baseIn(s);
+    G.from('.svc', { opacity: 0, y: 60, duration: 1.1, stagger: .12, ease: 'expo.out' });
+    $$('.svc__icon *', s).forEach(p => { const L = (p.getTotalLength ? p.getTotalLength() : 300) || 300; G.fromTo(p, { strokeDasharray: L, strokeDashoffset: L }, { strokeDashoffset: 0, duration: 1.6, delay: .4, ease: 'power2.inOut' }); });
+  });
+  setPos(94); range.value = 94;
+  reveal('#sketch', s => {
+    baseIn(s);
+    G.from(cmp, { clipPath: 'inset(10% 10% 10% 10% round 30px)', duration: 1.4, ease: 'expo.out' });
+    const o = { v: 94 };
+    G.to(o, { v: 50, duration: 2.2, delay: .4, ease: 'expo.inOut', onUpdate: () => { setPos(o.v); range.value = o.v; } });
+    G.from('.compare__overlay > *', { opacity: 0, duration: .6, stagger: .06, delay: .3 });
+  });
+  reveal('#reviews', s => {
+    baseIn(s);
+    G.from('.review', { opacity: 0, y: 60, rotate: i => [-2, 0, 2][i], duration: 1.1, stagger: .12, ease: 'expo.out' });
+    G.from('.reviews__foot > *', { opacity: 0, y: 20, duration: .9, delay: .5, stagger: .1 });
+  });
+  reveal('#clients', s => {
+    baseIn(s);
+    G.from('.client', { opacity: 0, scale: .9, duration: .9, stagger: .06, ease: 'expo.out' });
+    G.from('.clients__foot > *', { opacity: 0, y: 20, duration: .9, delay: .5, stagger: .1 });
+  });
+  reveal('#process', s => {
+    baseIn(s);
+    const vertical = innerWidth <= 860;
+    G.to('.process__line i', { [vertical ? 'scaleY' : 'scaleX']: 1, duration: 2.4, ease: 'power2.inOut', delay: .3 });
+    $$('.step').forEach((st, i) => {
+      G.from(st, { opacity: 0, y: 30, duration: .9, delay: .3 + i * .5, ease: 'expo.out' });
+      setTimeout(() => st.classList.add('is-on'), 600 + i * 550);
     });
-    gsap.to('.projects__bar i', { scaleX: 1, ease: 'none', scrollTrigger: { trigger: '.projects', start: 'top top', end: () => '+=' + dist(), scrub: true } });
-    $$('.pcard__media img').forEach(img => gsap.fromTo(img, { xPercent: 8 }, { xPercent: -8, ease: 'none',
-      scrollTrigger: { trigger: img.closest('.pcard'), containerAnimation: st, start: 'right right', end: 'left left', scrub: true } }));
-    return () => {};
+    G.from('.process__cta > *', { opacity: 0, y: 20, duration: .9, delay: 2.2, stagger: .1 });
   });
-  mm.add('(max-width: 860px)', () => {
-    $$('.pcard').forEach(p => gsap.from(p, { y: 60, opacity: 0, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: p, start: 'top 85%' } }));
-  });
-
-  /* ---------- services: draw icons ---------- */
-  $$('.svc').forEach(svc => {
-    const shapes = $$('.svc__icon *', svc);
-    shapes.forEach(s => { const L = (s.getTotalLength ? s.getTotalLength() : 300) || 300; gsap.set(s, { strokeDasharray: L, strokeDashoffset: L }); });
-    gsap.to(shapes, { strokeDashoffset: 0, duration: 1.6, stagger: .08, ease: 'power2.inOut', scrollTrigger: { trigger: svc, start: 'top 75%' } });
-    gsap.from(svc.children, { y: 40, opacity: 0, duration: 1.1, stagger: .08, ease: 'expo.out', scrollTrigger: { trigger: svc, start: 'top 85%' } });
+  reveal('#contact', s => {
+    G.from('.contact__big', { yPercent: 40, opacity: 0, duration: 1.4, ease: 'expo.out' });
+    G.from($$('.split .w > span', s), { yPercent: 115, duration: 1.1, stagger: .05, ease: 'expo.out', delay: .2 });
+    G.from('.contact__grid p, .contact__wa, .contact__alt, .composer', { opacity: 0, y: 30, duration: 1, stagger: .1, ease: 'expo.out', delay: .3 });
   });
 
-  /* ---------- film scale ---------- */
-  const film = $('.film'), fv = $('.film video');
-  gsap.to('.film__frame', { clipPath: 'inset(0% 0% 0% 0% round 0px)', ease: 'none',
-    scrollTrigger: { trigger: film, start: 'top top', end: 'center center', scrub: true } });
-  gsap.fromTo('.film__words span:first-child', { x: 0 }, { x: () => -innerWidth * .18, ease: 'none', scrollTrigger: { trigger: film, start: 'top bottom', end: 'bottom top', scrub: true } });
-  gsap.fromTo('.film__words span:last-child', { x: 0 }, { x: () => innerWidth * .18, ease: 'none', scrollTrigger: { trigger: film, start: 'top bottom', end: 'bottom top', scrub: true } });
-  gsap.from('.film__caption', { opacity: 0, y: 30, scrollTrigger: { trigger: film, start: 'center center', end: 'center 30%', scrub: true } });
-  ScrollTrigger.create({ trigger: film, start: 'top bottom', end: 'bottom top', onToggle: s => s.isActive ? fv.play().catch(() => {}) : fv.pause() });
-
-  /* ---------- process line ---------- */
-  mm.add('(min-width: 861px)', () => {
-    gsap.to('.process__line i', { scaleX: 1, ease: 'none', scrollTrigger: { trigger: '.process__rail', start: 'top 75%', end: 'bottom 45%', scrub: true } });
-  });
-  mm.add('(max-width: 860px)', () => {
-    gsap.to('.process__line i', { scaleY: 1, ease: 'none', scrollTrigger: { trigger: '.process__rail', start: 'top 75%', end: 'bottom 60%', scrub: true } });
-  });
-  gsap.from('.step', { y: 50, opacity: 0, duration: 1.2, stagger: .14, ease: 'expo.out', scrollTrigger: { trigger: '.process__rail', start: 'top 80%' } });
-
-  /* ---------- about ---------- */
-  gsap.from('.about__img--a', { clipPath: 'inset(100% 0 0 0)', duration: 1.6, ease: 'expo.inOut', scrollTrigger: { trigger: '.about', start: 'top 75%' } });
-  gsap.from('.about__img--b', { clipPath: 'inset(0 0 100% 0)', y: 60, duration: 1.6, delay: .3, ease: 'expo.inOut', scrollTrigger: { trigger: '.about', start: 'top 75%' } });
-  gsap.fromTo('[data-parallax]', { yPercent: -8, scale: 1.15 }, { yPercent: 8, scale: 1.15, ease: 'none', scrollTrigger: { trigger: '.about', start: 'top bottom', end: 'bottom top', scrub: true } });
-  gsap.from('.about__text p', { y: 30, opacity: 0, duration: 1, stagger: .12, ease: 'power3.out', scrollTrigger: { trigger: '.about__text', start: 'top 70%' } });
-  gsap.from('.about__sign .script', { clipPath: 'inset(0 100% 0 0)', duration: 2.2, ease: 'power2.inOut', scrollTrigger: { trigger: '.about__sign', start: 'top 90%' } });
-
-  /* ---------- materials drift ---------- */
-  const row = $('[data-drift]');
-  gsap.fromTo(row, { x: () => -(row.scrollWidth - innerWidth) * .1 }, { x: () => -(row.scrollWidth - innerWidth) * .9 - 0, ease: 'none',
-    scrollTrigger: { trigger: '.materials', start: 'top bottom', end: 'bottom top', scrub: true, invalidateOnRefresh: true } });
-  gsap.from('.mat', { y: 80, opacity: 0, duration: 1.2, stagger: .08, ease: 'expo.out', scrollTrigger: { trigger: row, start: 'top 85%' } });
-
-  /* ---------- contact ---------- */
-  gsap.from('.contact__big', { yPercent: 40, opacity: 0, duration: 1.6, ease: 'expo.out', scrollTrigger: { trigger: '.contact', start: 'top 70%' } });
-  gsap.fromTo('.contact__big span', { x: -40 }, { x: 40, ease: 'none', scrollTrigger: { trigger: '.contact', start: 'top bottom', end: 'bottom top', scrub: true } });
-  gsap.from('.titleblock > div', { opacity: 0, y: 20, duration: 1, stagger: .08, scrollTrigger: { trigger: '.titleblock', start: 'top 92%' } });
-
-  /* magnetic pills */
-  if (fine) $$('.pill, .wa-float').forEach(b => {
-    b.addEventListener('mousemove', e => { const r = b.getBoundingClientRect(); gsap.to(b, { x: (e.clientX - r.left - r.width / 2) * .25, y: (e.clientY - r.top - r.height / 2) * .35, duration: .5, ease: 'power3.out' }); });
-    b.addEventListener('mouseleave', () => gsap.to(b, { x: 0, y: 0, duration: .8, ease: 'elastic.out(1,.4)' }));
+  /* magnetic buttons */
+  if (fine) $$('.btn, .wa-float__btn, .contact__wa').forEach(b => {
+    b.addEventListener('mousemove', e => { const r = b.getBoundingClientRect(); G.to(b, { x: (e.clientX - r.left - r.width / 2) * .18, y: (e.clientY - r.top - r.height / 2) * .3, duration: .5, ease: 'power3.out' }); });
+    b.addEventListener('mouseleave', () => G.to(b, { x: 0, y: 0, duration: .8, ease: 'elastic.out(1,.4)' }));
   });
 
-  addEventListener('load', () => ScrollTrigger.refresh());
+  /* 3D tilt on cards */
+  if (fine) $$('.review, .stat').forEach(c => {
+    c.addEventListener('mousemove', e => { const r = c.getBoundingClientRect(); G.to(c, { rotateY: ((e.clientX - r.left) / r.width - .5) * 8, rotateX: -((e.clientY - r.top) / r.height - .5) * 8, transformPerspective: 900, duration: .6, ease: 'power3.out' }); });
+    c.addEventListener('mouseleave', () => G.to(c, { rotateX: 0, rotateY: 0, duration: .9, ease: 'expo.out' }));
+  });
 })();
