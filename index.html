@@ -45,10 +45,7 @@
       <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>
       <span>054-2059860</span>
     </a>
-    <a class="btn btn--wa" href="#" data-wa>
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#i-wa"/></svg>
-      וואטסאפ <span class="num">054-2059860</span>
-    </a>
+    <a class="wa-round" href="#" data-wa aria-label="וואטסאפ 054-2059860"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><use href="#i-wa"/></svg></a>
     <button class="burger" aria-label="פתיחת תפריט" aria-expanded="false"><span></span></button>
   </div>
 </header>
@@ -75,6 +72,7 @@
 <section class="screen hero" id="home" data-title="ראשי" data-theme="dark">
   <div class="scene" aria-hidden="true">
     <img class="scene__img scene__dark" src="assets/img/p/1000500028.webp" alt="">
+    <img class="scene__img scene__sketch" src="assets/img/p/1000500028.webp" alt="">
     <img class="scene__img scene__lit" src="assets/img/p/1000500028.webp" alt="">
     <div class="scene__flare"></div>
     <button class="hot" style="left:48%;top:25%" data-light="48,25" data-cursor="ON" tabindex="-1">ON</button>
@@ -220,10 +218,18 @@
       <div class="eyebrow"><b class="lbl">05</b><span class="lbl">From line to living</span></div>
       <h2 class="h-l split">מהקו הראשון <b>לחלל עצמו.</b></h2>
     </div>
-    <p>גררו את הקו וראו איך שרטוט הופך לחלל — דירת יוקרה, תכנון ועיצוב פנים.</p>
+    <div class="build">
+      <p>גררו את הקו — או בנו את החדר שלב אחרי שלב.</p>
+      <div class="build__steps" role="group" aria-label="שלבי בניית החלל">
+        <button data-step="0"><i>01</i>שרטוט</button>
+        <button data-step="1"><i>02</i>חומרים</button>
+        <button data-step="2"><i>03</i>ריהוט ופרטים</button>
+        <button data-step="3" aria-pressed="true"><i>04</i>אור</button>
+      </div>
+    </div>
   </div>
-  <div class="compare" data-cursor="DRAG" style="--pos:50%">
-    <div class="compare__layer"><img src="assets/img/p/1000796844.webp" alt="דירת יוקרה — הדמיה" loading="lazy"></div>
+  <div class="compare" data-cursor="DRAG" data-step="3" style="--pos:50%">
+    <div class="compare__layer compare__real"><img src="assets/img/p/1000796844.webp" alt="דירת יוקרה — הדמיה" loading="lazy"></div><div class="compare__glow"></div><div class="pins compare__pins"></div>
     <div class="compare__layer compare__sketch"><img src="assets/img/p/1000796844.webp" alt="" loading="lazy">
       <svg class="compare__overlay" viewBox="0 0 1536 826" preserveAspectRatio="none" aria-hidden="true">
         <line x1="605" y1="150" x2="605" y2="600"/><line x1="1105" y1="150" x2="1105" y2="600"/>
@@ -283,15 +289,9 @@
     </div>
     <p>מוסדות קהילה, ארגונים, עסקים ומשפחות — כל לקוח מקבל תכנון שנבנה סביבו.</p>
   </div>
-  <div class="clients__grid">
-    <div class="client"><div class="client__logo"><span class="client__mark">01</span><b>נשי חב״ד צפת</b><span>מרכז מלכתא</span></div></div>
-    <div class="client"><div class="client__logo"><span class="client__mark">02</span><b>בית חב״ד נאות פרס</b><span>חיפה</span></div></div>
-    <div class="client client--ph"><span class="demo">חסר שם</span><div class="client__logo"><span class="client__mark">03</span><b>[שם המוסד]</b><span>מועדונית נוער</span></div></div>
-    <div class="client client--ph"><span class="demo">חסר שם</span><div class="client__logo"><span class="client__mark">04</span><b>[שם החברה]</b><span>מעבדת אלקטרוניקה</span></div></div>
-    <div class="client client--ph"><span class="demo">לדוגמה</span><div class="client__logo"><span class="client__mark">05</span><b>[לוגו לקוח]</b><span>מוסד חינוך</span></div></div>
-    <div class="client client--ph"><span class="demo">לדוגמה</span><div class="client__logo"><span class="client__mark">06</span><b>[לוגו לקוח]</b><span>רשות / עירייה</span></div></div>
-    <div class="client client--ph"><span class="demo">לדוגמה</span><div class="client__logo"><span class="client__mark">07</span><b>[לוגו לקוח]</b><span>משרדים</span></div></div>
-    <div class="client client--ph"><span class="demo">לדוגמה</span><div class="client__logo"><span class="client__mark">08</span><b>[לוגו לקוח]</b><span>יזמות ומגורים</span></div></div>
+  <div class="bands" aria-label="מוסדות ולקוחות">
+    <div class="band band--a"><div class="band__track" data-dir="1"><div class="client"><div class="client__in"><span class="client__mark">01</span><b>נשי חב״ד צפת</b><span class="client__sub">מרכז מלכתא</span></div></div><div class="client"><div class="client__in"><span class="client__mark">02</span><b>בית חב״ד נאות פרס</b><span class="client__sub">חיפה</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">03</span><b>[שם המוסד]</b><span class="client__sub">מועדונית נוער</span><span class="demo">חסר שם</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">04</span><b>[שם החברה]</b><span class="client__sub">מעבדת אלקטרוניקה</span><span class="demo">חסר שם</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">05</span><b>[לוגו לקוח]</b><span class="client__sub">מוסד חינוך</span><span class="demo">לדוגמה</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">06</span><b>[לוגו לקוח]</b><span class="client__sub">רשות / עירייה</span><span class="demo">לדוגמה</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">07</span><b>[לוגו לקוח]</b><span class="client__sub">משרדים</span><span class="demo">לדוגמה</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">08</span><b>[לוגו לקוח]</b><span class="client__sub">יזמות ומגורים</span><span class="demo">לדוגמה</span></div></div><div class="client"><div class="client__in"><span class="client__mark">01</span><b>נשי חב״ד צפת</b><span class="client__sub">מרכז מלכתא</span></div></div><div class="client"><div class="client__in"><span class="client__mark">02</span><b>בית חב״ד נאות פרס</b><span class="client__sub">חיפה</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">03</span><b>[שם המוסד]</b><span class="client__sub">מועדונית נוער</span><span class="demo">חסר שם</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">04</span><b>[שם החברה]</b><span class="client__sub">מעבדת אלקטרוניקה</span><span class="demo">חסר שם</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">05</span><b>[לוגו לקוח]</b><span class="client__sub">מוסד חינוך</span><span class="demo">לדוגמה</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">06</span><b>[לוגו לקוח]</b><span class="client__sub">רשות / עירייה</span><span class="demo">לדוגמה</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">07</span><b>[לוגו לקוח]</b><span class="client__sub">משרדים</span><span class="demo">לדוגמה</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">08</span><b>[לוגו לקוח]</b><span class="client__sub">יזמות ומגורים</span><span class="demo">לדוגמה</span></div></div></div></div>
+    <div class="band band--b"><div class="band__track" data-dir="-1"><div class="client client--ph"><div class="client__in"><span class="client__mark">05</span><b>[לוגו לקוח]</b><span class="client__sub">מוסד חינוך</span><span class="demo">לדוגמה</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">06</span><b>[לוגו לקוח]</b><span class="client__sub">רשות / עירייה</span><span class="demo">לדוגמה</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">07</span><b>[לוגו לקוח]</b><span class="client__sub">משרדים</span><span class="demo">לדוגמה</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">08</span><b>[לוגו לקוח]</b><span class="client__sub">יזמות ומגורים</span><span class="demo">לדוגמה</span></div></div><div class="client"><div class="client__in"><span class="client__mark">01</span><b>נשי חב״ד צפת</b><span class="client__sub">מרכז מלכתא</span></div></div><div class="client"><div class="client__in"><span class="client__mark">02</span><b>בית חב״ד נאות פרס</b><span class="client__sub">חיפה</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">03</span><b>[שם המוסד]</b><span class="client__sub">מועדונית נוער</span><span class="demo">חסר שם</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">04</span><b>[שם החברה]</b><span class="client__sub">מעבדת אלקטרוניקה</span><span class="demo">חסר שם</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">05</span><b>[לוגו לקוח]</b><span class="client__sub">מוסד חינוך</span><span class="demo">לדוגמה</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">06</span><b>[לוגו לקוח]</b><span class="client__sub">רשות / עירייה</span><span class="demo">לדוגמה</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">07</span><b>[לוגו לקוח]</b><span class="client__sub">משרדים</span><span class="demo">לדוגמה</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">08</span><b>[לוגו לקוח]</b><span class="client__sub">יזמות ומגורים</span><span class="demo">לדוגמה</span></div></div><div class="client"><div class="client__in"><span class="client__mark">01</span><b>נשי חב״ד צפת</b><span class="client__sub">מרכז מלכתא</span></div></div><div class="client"><div class="client__in"><span class="client__mark">02</span><b>בית חב״ד נאות פרס</b><span class="client__sub">חיפה</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">03</span><b>[שם המוסד]</b><span class="client__sub">מועדונית נוער</span><span class="demo">חסר שם</span></div></div><div class="client client--ph"><div class="client__in"><span class="client__mark">04</span><b>[שם החברה]</b><span class="client__sub">מעבדת אלקטרוניקה</span><span class="demo">חסר שם</span></div></div></div></div>
   </div>
   <div class="clients__foot">
     <p>מנהלים מוסד, ארגון או עסק ומתכננים שיפוץ או חלל חדש? נשמח לתאם שיחת היכרות.</p>
@@ -368,7 +368,6 @@
 
 <!-- floating WhatsApp (desktop) -->
 <a class="wa-float" href="#" data-wa aria-label="דברו איתי בוואטסאפ 054-2059860">
-  <span class="wa-float__tip"><b>דברו איתי בוואטסאפ</b><span>054-2059860</span></span>
   <span class="wa-float__btn"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg></span>
 </a>
 <!-- sticky bar (mobile) -->
@@ -391,6 +390,16 @@
 </div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="fx-paper" color-interpolation-filters="sRGB">
+    <feColorMatrix type="saturate" values="0"/>
+    <feConvolveMatrix order="3" kernelMatrix="-1 -1 -1 -1 8 -1 -1 -1 -1" preserveAlpha="true"/>
+    <feComponentTransfer><feFuncR type="linear" slope="-5" intercept="1"/><feFuncG type="linear" slope="-5.4" intercept="1"/><feFuncB type="linear" slope="-6" intercept="1"/></feComponentTransfer>
+  </filter>
+  <filter id="fx-glow" color-interpolation-filters="sRGB">
+    <feColorMatrix type="saturate" values="0"/>
+    <feConvolveMatrix order="3" kernelMatrix="-1 -1 -1 -1 8 -1 -1 -1 -1" preserveAlpha="true"/>
+    <feComponentTransfer><feFuncR type="linear" slope="5"/><feFuncG type="linear" slope="3.6"/><feFuncB type="linear" slope="2.4"/></feComponentTransfer>
+  </filter>
   <symbol id="i-wa" viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2c.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3Z"/></symbol>
 </svg>
 

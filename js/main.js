@@ -13,19 +13,19 @@
   const PROJECTS = [
     { name: 'מרכז מלכתא | נשי חב״ד צפת', type: 'Community Center', scope: 'תכנון ועיצוב פנים · פיקוח וניהול הפרויקט', kind: 'מרכז קהילתי',
       desc: 'מרכז רב־תכליתי המשלב חללי אירוח, התכנסות, פעילות, משרדים וחדר כושר. שפה עיצובית אלגנטית, חומרים בהירים ופרטי תאורה עשירים.',
-      light: [50, 18], images: ['1000499986', '1000509378', '1000500028', '1000499978', '1000509382', '1000500033', '1000500029'] },
+      pins: [[30, 6, 'תאורה שקועה', 'Recessed light'], [24, 47, 'דלת זכוכית ופליז', 'Brass & glass'], [93, 34, 'חיפוי עץ', 'Oak slats'], [64, 64, 'עיצוב שולחנות', 'Table setting'], [16, 86, 'שיש מבריק', 'Polished marble']], ratio: 1.5, light: [50, 18], images: ['1000499986', '1000509378', '1000500028', '1000499978', '1000509382', '1000500033', '1000500029'] },
     { name: 'בית חב״ד נאות פרס | חיפה', type: 'Community Space', scope: 'תכנון ועיצוב פנים · פיקוח עליון', kind: 'חלל קהילתי',
       desc: 'תכנון חללי התכנסות ולימוד, מטבח ומשרד בסביבה חמימה, שימושית ומזמינה. שילוב קשתות, גוונים טבעיים וחיפויי עץ.',
-      light: [45, 15], images: ['1000429748', '1000429875', '1000429874', '1000431507'] },
+      pins: [[33, 40, 'קשתות', 'Arches'], [9, 42, 'קיר אבן', 'Stone wall'], [88, 36, 'חיפוי עץ', 'Wood cladding'], [56, 70, 'עמדות לימוד', 'Study seating'], [57, 7, 'תאורה שקועה', 'Downlights']], ratio: 1.5, light: [45, 15], images: ['1000429748', '1000429875', '1000429874', '1000431507'] },
     { name: 'מועדונית נוער', type: 'Leisure & Community', scope: 'תכנון ועיצוב פנים בלבד', kind: 'פנאי וקהילה',
       desc: 'מרחב נוער צבעוני וגמיש הכולל אזורי ישיבה, פעילות חברתית ומשחק, תוך שילוב חומרים חמים ופלטת צבעים צעירה.',
-      light: [62, 22], images: ['1000661922', '1000661732', '1000661792', '1000661845', '1000661868', '1000661870', '1000661873', '1000661920', '1000661925', '1000661927'] },
+      pins: [[88, 24, 'מנורות תלויות', 'Pendants'], [40, 28, 'קיר פסי עץ', 'Slat wall'], [52, 74, 'ספה מודולרית', 'Modular sofa'], [9, 32, 'צמחייה', 'Greenery'], [70, 92, 'פינת משחק', 'Play corner']], ratio: 2.4, light: [62, 22], images: ['1000661922', '1000661732', '1000661792', '1000661845', '1000661868', '1000661870', '1000661873', '1000661920', '1000661925', '1000661927'] },
     { name: 'מעבדת אלקטרוניקה', type: 'Workspace', scope: 'תכנון ועיצוב פנים בלבד', kind: 'סביבת עבודה',
       desc: 'סביבת עבודה טכנולוגית מוקפדת עם עמדות עבודה מרובות, אזור משרדי נפרד ושילוב של גוונים כהים, כחול עמוק ותאורה פונקציונלית.',
-      light: [50, 12], images: ['1000640605', '1000640601', '1000640604', '1000640656'] },
+      pins: [[30, 30, 'מסך הדרכה', 'Training screen'], [59, 22, 'חיפוי כחול עמוק', 'Deep blue'], [60, 62, 'מחיצת זכוכית', 'Glass partition'], [80, 60, 'עמדות עבודה', 'Workstations'], [52, 8, 'תאורה פונקציונלית', 'Task light']], ratio: 1.873, light: [50, 12], images: ['1000640605', '1000640601', '1000640604', '1000640656'] },
     { name: 'דירת יוקרה', type: 'Residential', scope: 'תכנון ועיצוב פנים · פיקוח עליון', kind: 'מגורים',
       desc: 'חללי מגורים בהירים עם דגש על פרופורציות, נגרות מותאמת, תאורה רכה וחומרים טבעיים.',
-      light: [55, 30], images: ['1000796498', '1000796844', '1000796532', '1000796533', '1000796595', '1000796670', '1000796843'] },
+      pins: [[30, 30, 'גוף תאורה גלי', 'Wave light'], [31, 64, 'בר ישיבה', 'Breakfast bar'], [21, 42, 'מטבח מובנה', 'Built-ins'], [86, 52, 'מסגרת אבן', 'Stone frame'], [37, 7, 'ספוטים שקועים', 'Spots']], ratio: 1.86, light: [55, 30], images: ['1000796498', '1000796844', '1000796532', '1000796533', '1000796595', '1000796670', '1000796843'] },
   ];
   const img = id => `assets/img/p/${id}.webp`;
 
@@ -134,6 +134,42 @@
   }));
   sw.addEventListener('click', () => { touched = true; setLight(!heroOn); });
 
+
+  /* ---------- object-fit:cover mapping (image % → box px) ---------- */
+  const coverMap = (box, ratio, x, y) => {
+    const W = box.clientWidth, H = box.clientHeight;
+    let w = W, h = W / ratio; if (h < H) { h = H; w = H * ratio; }
+    return [(W - w) / 2 + w * x / 100, (H - h) / 2 + h * y / 100];
+  };
+  /* spec pins: dot + drawn leader line + label card */
+  const buildPins = (layer, box, ratio, list) => {
+    layer.innerHTML = '';
+    const W = box.clientWidth, H = box.clientHeight;
+    list.forEach(([x, y, he, en]) => {
+      const [px, py] = coverMap(box, ratio, x, y);
+      if (px < 10 || py < 10 || px > W - 10 || py > H - 10) return;
+      const left = px > W * .62, up = py > H * .35;
+      const dx = (left ? -1 : 1) * Math.min(90, W * .09), dy = (up ? -1 : 1) * Math.min(46, H * .08);
+      const el = document.createElement('div'); el.className = 'pin';
+      el.style.left = px + 'px'; el.style.top = py + 'px';
+      el.style.setProperty('--dx', dx + 'px'); el.style.setProperty('--dy', dy + 'px');
+      el.style.setProperty('--len', Math.hypot(dx, dy) + 'px');
+      el.style.setProperty('--ang', Math.atan2(dy, dx) + 'rad');
+      el.style.setProperty('--tx', left ? '-100%' : '0');
+      el.innerHTML = `<div class="pin__dot"></div><div class="pin__line"></div><div class="pin__card"><b>${he}</b><span>${en}</span></div>`;
+      layer.appendChild(el);
+    });
+    return $$('.pin', layer);
+  };
+  const animatePins = (pinsEls, delay = 0) => {
+    if (!G || reduced) return;
+    pinsEls.forEach((p, k) => {
+      const d = delay + k * .22;
+      G.fromTo($('.pin__dot', p), { scale: 0 }, { scale: 1, duration: .5, delay: d, ease: 'back.out(3)' });
+      G.fromTo($('.pin__line', p), { scaleX: 0 }, { scaleX: 1, duration: .5, delay: d + .15, ease: 'power2.out' });
+      G.fromTo($('.pin__card', p), { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: .5, delay: d + .45, ease: 'power3.out' });
+    });
+  };
   /* ==========================================================
      PROJECTS — light-up slider + gallery
      ========================================================== */
@@ -142,14 +178,16 @@
     <div class="slide" style="--lx:${p.light[0]}%;--ly:${p.light[1]}%">
       <img class="slide__dark" src="${img(p.images[0])}" alt="" loading="${i ? 'lazy' : 'eager'}">
       <img class="slide__lit" src="${img(p.images[0])}" alt="${p.name}" loading="${i ? 'lazy' : 'eager'}">
+      <img class="slide__sketch" src="${img(p.images[0])}" alt="" loading="lazy">
+      <div class="pins"></div>
       <div class="slide__tag"><span class="lbl">${p.type}</span></div>
       <span class="slide__num">0${i + 1}</span>
-    </div>`).join('') + `<div class="stage__bulb"><i></i><span class="bulb__txt">האור כבוי</span></div>`;
+    </div>`).join('') + `<div class="stage__bulb"><i></i><span class="bulb__txt">האור כבוי</span></div><div class="lens-ring"></div>`;
   thumbs.innerHTML = PROJECTS.map(p => `<button aria-label="${p.name}"><img src="${img(p.images[0])}" alt="" loading="lazy"><i></i></button>`).join('');
   const slides = $$('.slide', stage), tbtns = $$('button', thumbs);
   let cur = -1, timer = null, worksVisible = false;
   const fill = p => {
-    $('[data-p="type"]', info).innerHTML = `${p.kind} <span class="lbl" style="opacity:.6">· ${p.type}</span>`;
+    $('[data-p="type"]', info).innerHTML = `<span class="he-s" style="font-size:14px;font-weight:700">${p.kind}</span> · ${p.type}`;
     $('[data-p="name"]', info).textContent = p.name;
     $('[data-p="desc"]', info).textContent = p.desc;
     $('[data-p="scope"]', info).textContent = p.scope;
@@ -165,6 +203,9 @@
     $('.works__count').innerHTML = `<b>0${i + 1}</b> / 0${PROJECTS.length}`;
     stage.classList.remove('is-lit'); $('.bulb__txt').textContent = 'האור כבוי';
     const litImg = $('.slide__lit', s), darkImg = $('.slide__dark', s);
+    const pinEls = buildPins($('.pins', s), stage, p.ratio, p.pins);
+    pinEls.forEach(x => x.style.opacity = '');
+    if (G && !reduced) G.set($$('.pin__dot, .pin__line, .pin__card', s), { opacity: 0 }), animatePins(pinEls, 1.6), G.set($$('.pin__dot, .pin__line, .pin__card', s), { opacity: 1, delay: 1.55 });
     if (G && !reduced) {
       G.killTweensOf([litImg, darkImg, info]);
       G.set(litImg, { clipPath: `circle(0% at ${p.light[0]}% ${p.light[1]}%)` });
@@ -208,6 +249,14 @@
     $('.lightbox__close').focus();
   };
   const lbClose = () => { lb.hidden = true; document.body.style.overflow = ''; restartAuto(); };
+  const ring = $('.lens-ring');
+  stage.addEventListener('mousemove', e => {
+    const r = stage.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+    stage.style.setProperty('--mx', x + 'px'); stage.style.setProperty('--my', y + 'px');
+    $$('.slide__sketch', stage).forEach(im => { im.style.setProperty('--mx', x + 'px'); im.style.setProperty('--my', y + 'px'); });
+    ring.style.left = x + 'px'; ring.style.top = y + 'px';
+  });
+  addEventListener('resize', () => { const p = PROJECTS[cur]; buildPins($('.pins', slides[cur]), stage, p.ratio, p.pins); });
   stage.addEventListener('click', lbOpen);
   $('.works__open').addEventListener('click', lbOpen);
   $('.lightbox__close').addEventListener('click', lbClose);
@@ -224,6 +273,38 @@
   const cmp = $('.compare'), range = $('input', cmp);
   const setPos = v => cmp.style.setProperty('--pos', v + '%');
   range.addEventListener('input', () => setPos(range.value));
+
+  /* ---------- build the room in stages ---------- */
+  const cmpPinsData = [[16, 74, 'ספה פינתית', 'Linen sofa'], [30, 36, 'וילון פשתן', 'Linen drapes'], [52, 12, 'תאורה עקיפה', 'Cove light'], [84, 76, 'כורסת בוקלה', 'Boucle chair'], [57, 62, 'צמחייה', 'Greenery']];
+  const cmpPinsLayer = $('.compare__pins');
+  const stepBtns = $$('.build__steps button');
+  const setStep = n => {
+    cmp.dataset.step = n;
+    stepBtns.forEach(b => b.setAttribute('aria-pressed', +b.dataset.step === n));
+    const target = n === 0 ? 0 : 100;
+    if (G && !reduced) { const o = { v: parseFloat(range.value) }; G.to(o, { v: target, duration: 1.4, ease: 'expo.inOut', onUpdate: () => { setPos(o.v); range.value = o.v; } }); }
+    else { setPos(target); range.value = target; }
+    const els = n >= 2 ? buildPins(cmpPinsLayer, cmp, 1536 / 826, cmpPinsData) : (cmpPinsLayer.innerHTML = '', []);
+    if (n === 2) animatePins(els, .6);
+  };
+  stepBtns.forEach(b => b.addEventListener('click', () => setStep(+b.dataset.step)));
+  range.addEventListener('input', () => { cmp.dataset.step = 3; stepBtns.forEach(b => b.setAttribute('aria-pressed', b.dataset.step === '3')); });
+
+  /* ---------- flashlight grid + live dimension lines on every screen ---------- */
+  screens.forEach((s, i) => {
+    if (s.id !== 'home') { const f = document.createElement('div'); f.className = 'flash'; s.prepend(f); }
+    const d = document.createElement('div'); d.className = 'dim'; d.setAttribute('aria-hidden', 'true');
+    d.innerHTML = `<i></i><span>A-0${i + 1} · <b class="dim__w">0</b> × <b class="dim__h">0</b></span><i></i>`;
+    s.appendChild(d);
+    ['a', 'b'].forEach(k => { const r = document.createElement('span'); r.className = 'reg reg--' + k; r.setAttribute('aria-hidden', 'true'); s.appendChild(r); });
+  });
+  const setDims = () => { $$('.dim__w').forEach(e => e.textContent = innerWidth); $$('.dim__h').forEach(e => e.textContent = innerHeight); };
+  setDims(); addEventListener('resize', setDims);
+  if (fine) addEventListener('mousemove', e => {
+    const s = e.target.closest && e.target.closest('.screen'); if (!s) return;
+    const r = s.getBoundingClientRect();
+    s.style.setProperty('--mx', e.clientX - r.left + 'px'); s.style.setProperty('--my', e.clientY - r.top + 'px');
+  });
 
   /* ---------- composer → WhatsApp ---------- */
   const form = $('.composer');
@@ -325,7 +406,8 @@
   });
   reveal('#clients', s => {
     baseIn(s);
-    G.from('.client', { opacity: 0, scale: .9, duration: .9, stagger: .06, ease: 'expo.out' });
+    G.from('.band--a', { xPercent: 100, duration: 1.4, ease: 'expo.out' });
+    G.from('.band--b', { xPercent: -100, duration: 1.4, ease: 'expo.out', delay: .1 });
     G.from('.clients__foot > *', { opacity: 0, y: 20, duration: .9, delay: .5, stagger: .1 });
   });
   reveal('#process', s => {
@@ -342,6 +424,14 @@
     G.from('.contact__big', { yPercent: 40, opacity: 0, duration: 1.4, ease: 'expo.out' });
     G.from($$('.split .w > span', s), { yPercent: 115, duration: 1.1, stagger: .05, ease: 'expo.out', delay: .2 });
     G.from('.contact__grid p, .contact__wa, .contact__alt, .composer', { opacity: 0, y: 30, duration: 1, stagger: .1, ease: 'expo.out', delay: .3 });
+  });
+
+  /* clients bands — row A drifts right, row B drifts left; hover slows them */
+  $$('.band__track').forEach(t => {
+    const dir = +t.dataset.dir;
+    const tw = G.fromTo(t, { xPercent: dir > 0 ? -50 : 0 }, { xPercent: dir > 0 ? 0 : -50, duration: 38, ease: 'none', repeat: -1 });
+    t.addEventListener('mouseenter', () => G.to(tw, { timeScale: .15, duration: .6 }));
+    t.addEventListener('mouseleave', () => G.to(tw, { timeScale: 1, duration: .6 }));
   });
 
   /* magnetic buttons */
